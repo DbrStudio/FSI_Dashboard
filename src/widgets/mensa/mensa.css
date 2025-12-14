@@ -1,4 +1,4 @@
-:host .mensa-card {
+mensa-card .mensa-card {
     background: radial-gradient(120% 120% at 20% -10%, rgba(126, 161, 255, 0.14), transparent 55%),
         radial-gradient(120% 120% at 80% 0%, rgba(129, 230, 217, 0.16), transparent 50%),
         var(--color-card);
@@ -6,7 +6,7 @@
     box-shadow: var(--shadow-sm), 0 18px 40px rgba(0, 0, 0, 0.35);
 }
 
-:host .mensa-header {
+mensa-card .mensa-header {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -14,7 +14,7 @@
     margin-bottom: var(--space-md);
 }
 
-:host .mensa-eyebrow {
+mensa-card .mensa-eyebrow {
     margin: 0;
     color: var(--color-text-muted);
     text-transform: uppercase;
@@ -22,11 +22,11 @@
     font-size: var(--font-size-xs);
 }
 
-:host .mensa-header h2 {
+mensa-card .mensa-header h2 {
     margin: var(--space-2xs) 0 0 0;
 }
 
-:host .mensa-meta {
+mensa-card .mensa-meta {
     color: var(--color-text-muted);
     font-size: var(--font-size-sm);
     padding: var(--space-2xs) var(--space-xs);
@@ -36,7 +36,7 @@
     white-space: nowrap;
 }
 
-:host .mensa-list {
+mensa-card .mensa-list {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -45,7 +45,7 @@
     gap: var(--space-sm);
 }
 
-:host .mensa-item {
+mensa-card .mensa-item {
     padding: var(--space-sm);
     border-radius: var(--radius-sm);
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
@@ -53,7 +53,7 @@
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-:host .mensa-item-header {
+mensa-card .mensa-item-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -61,7 +61,7 @@
     margin-bottom: var(--space-2xs);
 }
 
-:host .mensa-label {
+mensa-card .mensa-label {
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
     display: inline-flex;
@@ -70,13 +70,13 @@
     letter-spacing: 0.01em;
 }
 
-:host .mensa-title {
+mensa-card .mensa-title {
     font-size: var(--font-size-lg);
     line-height: 1.25;
     font-weight: 600;
 }
 
-:host .mensa-price {
+mensa-card .mensa-price {
     font-size: var(--font-size-sm);
     color: var(--color-text);
     padding: var(--space-2xs) var(--space-sm);
@@ -86,14 +86,14 @@
     font-variant-numeric: tabular-nums;
 }
 
-:host .mensa-filters {
+mensa-card .mensa-filters {
     display: flex;
     gap: var(--space-2xs);
     flex-wrap: wrap;
     margin-top: var(--space-xs);
 }
 
-:host .mensa-chip {
+mensa-card .mensa-chip {
     display: inline-flex;
     align-items: center;
     gap: var(--space-3xs);
@@ -106,37 +106,37 @@
     letter-spacing: 0.01em;
 }
 
-:host .mensa-chip-icon {
+mensa-card .mensa-chip-icon {
     font-family: "Symbols Nerd Font", "Nerd Font", "JetBrainsMono Nerd Font", "FiraCode Nerd Font", "Hack Nerd Font",
         "Inter", system-ui, sans-serif;
     display: inline-flex;
 }
 
-:host .mensa-chip-label {
+mensa-card .mensa-chip-label {
     line-height: 1.2;
 }
 
-:host .mensa-chip-vegan {
+mensa-card .mensa-chip-vegan {
     background: rgba(129, 230, 150, 0.12);
     border-color: rgba(129, 230, 150, 0.35);
 }
 
-:host .mensa-chip-veggie {
+mensa-card .mensa-chip-veggie {
     background: rgba(253, 224, 71, 0.12);
     border-color: rgba(253, 224, 71, 0.4);
 }
 
-:host .mensa-chip-fisch {
+mensa-card .mensa-chip-fisch {
     background: rgba(59, 130, 246, 0.12);
     border-color: rgba(59, 130, 246, 0.35);
 }
 
-:host .mensa-chip-alkohol {
+mensa-card .mensa-chip-alkohol {
     background: rgba(236, 72, 153, 0.12);
     border-color: rgba(236, 72, 153, 0.35);
 }
 
-:host .mensa-chip-studyfit {
+mensa-card .mensa-chip-studyfit {
     background: rgba(79, 70, 229, 0.12);
     border-color: rgba(79, 70, 229, 0.35);
 }
