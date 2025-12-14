@@ -22,6 +22,7 @@ type Dish = {
   price_student: number;
   price_employee: number;
   filters?: FilterType[];
+  filter_list?: string[];
 };
 
 const FILTER_META: Record<FilterType, { icon: string; label: string }> = {
@@ -175,7 +176,7 @@ class MensaCard extends HTMLElement {
         title.textContent = dish.title;
         title.title = dish.title_intern;
 
-        const filters = createFilterChips(dish.filters);
+        const filters = createFilterChips(dish.filters ?? dish.filter_list);
 
         li.appendChild(header);
         li.appendChild(title);
