@@ -35,7 +35,7 @@ class MensaCard extends HTMLElement {
     if (!meta || !list || !error) return;
 
     const date = new Date();
-    const dateParam = '20251216';
+    const dateParam = yyyymmdd(date);
 
     // Standort 4 fixed for now (you can make it configurable later via layout registry if you want)
     const url = `/api/mensa/get_dishes?date=${dateParam}&standort=4`;

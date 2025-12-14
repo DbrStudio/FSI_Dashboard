@@ -1,25 +1,29 @@
 export type WidgetLayout = {
+  col: number;
+  row: number;
   colSpan: number;
   rowSpan: number;
-  col?: number;
-  row?: number;
 };
 
 export const layout: Record<string, WidgetLayout> = {
   'clock-card': {
-    colSpan: 1,
-    rowSpan: 2,
-    col: 6,
+    col: 4,
     row: 0,
+    colSpan: 2,
+    rowSpan: 2,
   },
 
   'xkcd-card': {
-    colSpan: 3,
-    rowSpan: 3,
+    col: 0,
+    row: 0,
+    colSpan: 2,
+    rowSpan: 4,
   },
 
   'mensa-card': {
-    colSpan: 3,
-    rowSpan: 3,
+    col: 2,
+    row: 0,
+    colSpan: 2,
+    rowSpan: 6,
   },
 };

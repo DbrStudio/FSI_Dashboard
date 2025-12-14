@@ -9,14 +9,10 @@ defineAllWidgets();
 
 for (const [tag, cfg] of Object.entries(layout)) {
   document.querySelectorAll<HTMLElement>(tag).forEach((el) => {
-    el.style.setProperty('--grid-col-span', String(cfg.colSpan));
-    el.style.setProperty('--grid-row-span', String(cfg.rowSpan));
+    const colStart = cfg.col + 1; // CSS grid is 1-based
+    const rowStart = cfg.row + 1;
 
-    if (cfg.col !== undefined) {
-      el.style.setProperty('--grid-col', String(cfg.col));
-    }
-    if (cfg.row !== undefined) {
-      el.style.setProperty('--grid-row', String(cfg.row));
-    }
+    el.style.gridColumn = `${colStart} / span ${cfg.colSpan}`;
+    el.style.gridRow = `${rowStart} / span ${cfg.rowSpan}`;
   });
 }
