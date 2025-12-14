@@ -1,0 +1,6 @@
+:host .time {
+    display: block;
+    height: 100%;
+    font-size: var(--font-size-xxl);
+    letter-spacing: 0.02em;
+}

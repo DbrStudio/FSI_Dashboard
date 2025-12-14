@@ -1,0 +1,18 @@
+:host .comic {
+    display: block;
+    height: 100%;
+    margin: 0;
+}
+
+:host .comic-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-sm);
+}
+
+:host .comic-caption {
+    margin-top: var(--space-sm);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
