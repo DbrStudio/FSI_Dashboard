@@ -89,9 +89,10 @@ mensa-card .mensa-price {
 }
 
 mensa-card .mensa-prices {
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
     gap: var(--space-2xs);
-    flex-wrap: wrap;
+    align-items: flex-end;
 }
 
 mensa-card .mensa-price-emoji {

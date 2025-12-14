@@ -28,9 +28,9 @@ type Dish = {
 const FILTER_META: Record<FilterType, { icon: string; label: string }> = {
   VEGAN: { icon: '🌱', label: 'Vegan' },
   VEGGIE: { icon: '🥕', label: 'Veggie' },
-  GLUTEN: { icon: '🌾', label: 'Gluten' },
-  LAKTOSE: { icon: '🥛', label: 'Laktose' },
-  ALKOHOL: { icon: '🍷', label: 'Alkohol' },
+  GLUTEN: { icon: '🚫🌾', label: 'Glutenfrei' },
+  LAKTOSE: { icon: '🚫🥛', label: 'Laktosefrei' },
+  ALKOHOL: { icon: '🚫🍷', label: 'Alkoholfrei' },
   GEFLUEGEL: { icon: '🍗', label: 'Geflügel' },
   FISCH: { icon: '🐟', label: 'Fisch' },
   STUDYFIT: { icon: '💪', label: 'StudyFit' },
