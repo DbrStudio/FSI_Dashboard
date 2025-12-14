@@ -22,19 +22,20 @@ type Dish = {
   price_student: number;
   price_employee: number;
   filters?: FilterType[];
+  filter_list?: string[];
 };
 
-const FILTER_META: Record<FilterType, { icon: string; fallback: string; label: string }> = {
-  VEGAN: { icon: '󰕚', fallback: '🌱', label: 'Vegan' },
-  VEGGIE: { icon: '󰩨', fallback: '🥕', label: 'Veggie' },
-  GLUTEN: { icon: '󰛸', fallback: '🌾', label: 'Gluten' },
-  LAKTOSE: { icon: '󰌪', fallback: '🥛', label: 'Laktose' },
-  ALKOHOL: { icon: '󰁔', fallback: '🍷', label: 'Alkohol' },
-  GEFLUEGEL: { icon: '󰣝', fallback: '🍗', label: 'Geflügel' },
-  FISCH: { icon: '󰊟', fallback: '🐟', label: 'Fisch' },
-  STUDYFIT: { icon: '󰩉', fallback: '💪', label: 'StudyFit' },
-  KLIMATELLER: { icon: '󰖎', fallback: '🜨', label: 'Klimateller' },
-  UNKNOWN: { icon: '󰈸', fallback: '❔', label: 'Unbekannt' },
+const FILTER_META: Record<FilterType, { icon: string; label: string }> = {
+  VEGAN: { icon: '🌱', label: 'Vegan' },
+  VEGGIE: { icon: '🥕', label: 'Veggie' },
+  GLUTEN: { icon: '🚫🌾', label: 'Glutenfrei' },
+  LAKTOSE: { icon: '🚫🥛', label: 'Laktosefrei' },
+  ALKOHOL: { icon: '🚫🍷', label: 'Alkoholfrei' },
+  GEFLUEGEL: { icon: '🍗', label: 'Geflügel' },
+  FISCH: { icon: '🐟', label: 'Fisch' },
+  STUDYFIT: { icon: '💪', label: 'StudyFit' },
+  KLIMATELLER: { icon: '🜨', label: 'Klimateller' },
+  UNKNOWN: { icon: '❔', label: 'Unbekannt' },
 };
 
 function normalizeFilter(filter: string): FilterType {
@@ -57,7 +58,7 @@ function createFilterChips(filters: unknown): HTMLElement | null {
     if (seen.has(normalized)) continue;
     seen.add(normalized);
 
-    const { icon, fallback, label } = FILTER_META[normalized];
+    const { icon, label } = FILTER_META[normalized];
 
     const chip = document.createElement('span');
     chip.className = `mensa-chip mensa-chip-${normalized.toLowerCase()}`;
@@ -65,7 +66,7 @@ function createFilterChips(filters: unknown): HTMLElement | null {
 
     const iconEl = document.createElement('span');
     iconEl.className = 'mensa-chip-icon';
-    iconEl.textContent = `${icon} ${fallback}`;
+    iconEl.textContent = icon;
     iconEl.setAttribute('aria-hidden', 'true');
 
     const text = document.createElement('span');
@@ -91,6 +92,41 @@ function formatEuro(value: number): string {
     style: 'currency',
     currency: 'EUR',
   }).format(value);
+}
+
+function createPriceBadges(dish: Dish): HTMLElement {
+  const container = document.createElement('div');
+  container.className = 'mensa-prices';
+
+  const prices = [
+    { label: 'Mitarbeitende', emoji: '👩‍💼', value: dish.price_employee },
+    { label: 'Studierende', emoji: '🎓', value: dish.price_student },
+    { label: 'Gäste', emoji: '👥', value: dish.price_guest },
+  ];
+
+  for (const { label, emoji, value } of prices) {
+    const badge = document.createElement('div');
+    badge.className = 'mensa-price';
+    badge.title = label;
+
+    const emojiEl = document.createElement('span');
+    emojiEl.className = 'mensa-price-emoji';
+    emojiEl.textContent = emoji;
+    emojiEl.setAttribute('aria-hidden', 'true');
+
+    const valueEl = document.createElement('span');
+    valueEl.className = 'mensa-price-value';
+    valueEl.textContent = formatEuro(value);
+
+    const labelEl = document.createElement('span');
+    labelEl.className = 'mensa-price-label';
+    labelEl.textContent = label;
+
+    badge.append(emojiEl, valueEl, labelEl);
+    container.appendChild(badge);
+  }
+
+  return container;
 }
 
 class MensaCard extends HTMLElement {
@@ -130,19 +166,17 @@ class MensaCard extends HTMLElement {
         label.className = 'mensa-label';
         label.textContent = dish.label;
 
-        const price = document.createElement('div');
-        price.className = 'mensa-price';
-        price.textContent = formatEuro(dish.price_student);
+        const priceBadges = createPriceBadges(dish);
 
         header.appendChild(label);
-        header.appendChild(price);
+        header.appendChild(priceBadges);
 
         const title = document.createElement('div');
         title.className = 'mensa-title';
         title.textContent = dish.title;
         title.title = dish.title_intern;
 
-        const filters = createFilterChips(dish.filters);
+        const filters = createFilterChips(dish.filters ?? dish.filter_list);
 
         li.appendChild(header);
         li.appendChild(title);

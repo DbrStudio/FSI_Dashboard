@@ -55,10 +55,11 @@ mensa-card .mensa-item {
 
 mensa-card .mensa-item-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: var(--space-sm);
     margin-bottom: var(--space-2xs);
+    flex-wrap: wrap;
 }
 
 mensa-card .mensa-label {
@@ -77,13 +78,37 @@ mensa-card .mensa-title {
 }
 
 mensa-card .mensa-price {
-    font-size: var(--font-size-sm);
-    color: var(--color-text);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3xs);
     padding: var(--space-2xs) var(--space-sm);
     border-radius: 999px;
     background: rgba(129, 230, 217, 0.12);
     border: 1px solid rgba(129, 230, 217, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+mensa-card .mensa-prices {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    align-items: flex-end;
+}
+
+mensa-card .mensa-price-emoji {
+    font-size: var(--font-size-sm);
+    line-height: 1;
+}
+
+mensa-card .mensa-price-value {
+    font-size: var(--font-size-sm);
     font-variant-numeric: tabular-nums;
+    font-weight: 600;
+}
+
+mensa-card .mensa-price-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
 }
 
 mensa-card .mensa-filters {
@@ -107,8 +132,6 @@ mensa-card .mensa-chip {
 }
 
 mensa-card .mensa-chip-icon {
-    font-family: "Symbols Nerd Font", "Nerd Font", "JetBrainsMono Nerd Font", "FiraCode Nerd Font", "Hack Nerd Font",
-        "Inter", system-ui, sans-serif;
     display: inline-flex;
 }
 
