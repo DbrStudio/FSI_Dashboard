@@ -7,15 +7,19 @@ function two(n: number): string {
 
 class ClockCard extends HTMLElement {
   private timer: number | undefined;
+  private weatherTimer: number | undefined;
 
   connectedCallback(): void {
     this.innerHTML = template;
 
     const timeEl = this.querySelector('.clock-time') as HTMLDivElement | null;
     const dateEl = this.querySelector('.clock-date') as HTMLDivElement | null;
-    const subEl = this.querySelector('.clock-sub') as HTMLDivElement | null;
+    const tempEl = this.querySelector('.weather-temp') as HTMLSpanElement | null;
+    const descEl = this.querySelector('.weather-desc') as HTMLSpanElement | null;
+    const locationEl = this.querySelector('.weather-location') as HTMLSpanElement | null;
+    const updatedEl = this.querySelector('.weather-updated') as HTMLSpanElement | null;
 
-    if (!timeEl || !dateEl || !subEl) return;
+    if (!timeEl || !dateEl || !tempEl || !descEl || !locationEl || !updatedEl) return;
 
     const tick = (): void => {
       const now = new Date();
@@ -34,11 +38,56 @@ class ClockCard extends HTMLElement {
 
     tick();
     if (this.timer) window.clearInterval(this.timer);
-    this.timer = window.setInterval(tick, 250);
+    this.timer = window.setInterval(tick, 1000);
+
+    const fetchWeather = async (): Promise<void> => {
+      const apiKey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY as string | undefined;
+      const location = this.getAttribute('data-location') ?? 'Karlsruhe, DE';
+      const units = this.getAttribute('data-units') ?? 'metric';
+
+      locationEl.textContent = location;
+
+      if (!apiKey) {
+        descEl.textContent = 'Set VITE_OPENWEATHERMAP_API_KEY';
+        updatedEl.textContent = '';
+        return;
+      }
+
+      try {
+        const url = new URL('https://api.openweathermap.org/data/2.5/weather');
+        url.searchParams.set('q', location);
+        url.searchParams.set('units', units);
+        url.searchParams.set('appid', apiKey);
+
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Weather error: ${res.status}`);
+
+        const data = (await res.json()) as {
+          main?: { temp?: number };
+          weather?: Array<{ description?: string }>;
+        };
+
+        const temp = data.main?.temp;
+        const desc = data.weather?.[0]?.description;
+
+        tempEl.textContent = typeof temp === 'number' ? `${Math.round(temp)}°${units === 'metric' ? 'C' : 'F'}` : '--°';
+        descEl.textContent = desc ? desc : 'Weather unavailable';
+        updatedEl.textContent = `Updated ${new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}`;
+      } catch (error) {
+        descEl.textContent = 'Weather unavailable';
+        updatedEl.textContent = '';
+        console.error(error);
+      }
+    };
+
+    fetchWeather();
+    if (this.weatherTimer) window.clearInterval(this.weatherTimer);
+    this.weatherTimer = window.setInterval(fetchWeather, 10 * 60 * 1000);
   }
 
   disconnectedCallback(): void {
     if (this.timer) window.clearInterval(this.timer);
+    if (this.weatherTimer) window.clearInterval(this.weatherTimer);
   }
 }
 
