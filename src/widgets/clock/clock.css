@@ -78,6 +78,7 @@ clock-card .weather-temp {
 
 clock-card .weather-desc {
     text-transform: capitalize;
+    font-family: "JetBrainsMono Nerd Font", "FiraCode Nerd Font", monospace;
 }
 
 clock-card .weather-meta {

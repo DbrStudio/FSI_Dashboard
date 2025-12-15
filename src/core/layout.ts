@@ -22,9 +22,9 @@ export const layout: Record<string, WidgetLayout> = {
 
   'mensa-card': {
     col: 3,
-    row: 0,
+    row: 2,
     colSpan: 3,
-    rowSpan: 6,
+    rowSpan: 4,
   },
 
   'vrt-card': {

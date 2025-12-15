@@ -1,6 +1,21 @@
 import template from './clock.template.html?raw';
 import './clock.css';
 
+function weatherIcon(desc?: string): string {
+  if (!desc) return '󰋙'; // unknown
+
+  const d = desc.toLowerCase();
+
+  if (d.includes('clear')) return '󰖙';
+  if (d.includes('cloud')) return '󰖐';
+  if (d.includes('rain') || d.includes('drizzle')) return '󰖗';
+  if (d.includes('thunder')) return '󰙾';
+  if (d.includes('snow')) return '󰖘';
+  if (d.includes('fog') || d.includes('mist') || d.includes('haze')) return '󰖑';
+
+  return '󰋙';
+}
+
 function two(n: number): string {
   return String(n).padStart(2, '0');
 }
@@ -42,7 +57,7 @@ class ClockCard extends HTMLElement {
 
     const fetchWeather = async (): Promise<void> => {
       const apiKey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY as string | undefined;
-      const location = this.getAttribute('data-location') ?? 'Karlsruhe, DE';
+      const location = this.getAttribute('data-location') ?? 'Trier, DE';
       const units = this.getAttribute('data-units') ?? 'metric';
 
       locationEl.textContent = location;
@@ -69,10 +84,15 @@ class ClockCard extends HTMLElement {
 
         const temp = data.main?.temp;
         const desc = data.weather?.[0]?.description;
+        const icon = weatherIcon(desc);
 
-        tempEl.textContent = typeof temp === 'number' ? `${Math.round(temp)}°${units === 'metric' ? 'C' : 'F'}` : '--°';
-        descEl.textContent = desc ? desc : 'Weather unavailable';
-        updatedEl.textContent = `Updated ${new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}`;
+        tempEl.textContent =
+          typeof temp === 'number'
+            ? `${Math.round(temp)}°${units === 'metric' ? 'C' : 'F'}`
+            : '--°';
+
+        descEl.textContent = desc ? `${icon} ${desc}` : 'Weather unavailable';
+        updatedEl.textContent = `Updated ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
       } catch (error) {
         descEl.textContent = 'Weather unavailable';
         updatedEl.textContent = '';
