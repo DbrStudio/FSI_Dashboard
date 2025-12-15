@@ -7,8 +7,8 @@ export type WidgetLayout = {
 
 export const layout: Record<string, WidgetLayout> = {
   'clock-card': {
-    col: 4,
-    row: 0,
+    col: 0,
+    row: 4,
     colSpan: 2,
     rowSpan: 2,
   },

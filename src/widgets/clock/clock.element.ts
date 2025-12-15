@@ -20,15 +20,16 @@ class ClockCard extends HTMLElement {
     const tick = (): void => {
       const now = new Date();
 
-      timeEl.textContent = `${two(now.getHours())}:${two(now.getMinutes())}`;
+      timeEl.textContent = `${two(now.getHours())}:${two(now.getMinutes())}:${two(now.getSeconds())}`;
 
       dateEl.textContent = now.toLocaleDateString('de-DE', {
         weekday: 'short',
         day: '2-digit',
         month: '2-digit',
+        year: 'numeric',
       });
 
-      subEl.textContent = `:${two(now.getSeconds())} · ${now.getFullYear()}`;
+      //subEl.textContent = `:${two(now.getSeconds())} · ${now.getFullYear()}`;
     };
 
     tick();

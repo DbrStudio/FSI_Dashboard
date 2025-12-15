@@ -59,7 +59,7 @@ mensa-card .mensa-item {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
     display: flex;
     flex-direction: column;
-    gap: var(--space-3xs);
+    gap: var(--space-xs);
 }
 
 mensa-card .mensa-item-header {
@@ -67,7 +67,7 @@ mensa-card .mensa-item-header {
     align-items: center;
     justify-content: space-between;
     gap: var(--space-sm);
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 mensa-card .mensa-label {
@@ -77,7 +77,7 @@ mensa-card .mensa-label {
     align-items: center;
     gap: var(--space-2xs);
     letter-spacing: 0.01em;
-    margin-bottom: var(--space-4xs);
+    margin-bottom: var(--space-xs);
 }
 
 mensa-card .mensa-title {
@@ -89,7 +89,7 @@ mensa-card .mensa-title {
 mensa-card .mensa-price {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-3xs);
+    gap: var(--space-xs);
     padding: var(--space-2xs) var(--space-sm);
     border-radius: 999px;
     background: rgba(129, 230, 217, 0.12);
@@ -99,9 +99,9 @@ mensa-card .mensa-price {
 
 mensa-card .mensa-prices {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: var(--space-2xs);
-    align-items: center;
+    align-items: end;
     justify-content: flex-end;
     flex: 1;
 }
@@ -132,8 +132,8 @@ mensa-card .mensa-filters {
 mensa-card .mensa-chip {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-3xs);
-    padding: var(--space-3xs) var(--space-2xs);
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-2xs);
     border-radius: 999px;
     font-size: var(--font-size-xs);
     border: 1px solid rgba(255, 255, 255, 0.08);

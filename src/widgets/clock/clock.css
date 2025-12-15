@@ -32,17 +32,13 @@ clock-card h2 {
 }
 
 clock-card .clock-date {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2xs);
-    color: var(--color-text);
+    color: var(--color-text-muted);
     font-size: var(--font-size-sm);
+    padding: var(--space-2xs) var(--space-xs);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     white-space: nowrap;
-    padding: var(--space-3xs) var(--space-sm);
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 clock-card .clock-time {
@@ -61,8 +57,8 @@ clock-card .clock-sub {
     color: var(--color-text-muted);
     display: inline-flex;
     align-items: center;
-    gap: var(--space-3xs);
-    padding: var(--space-3xs) var(--space-xs);
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-xs);
     background: rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-sm);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -71,7 +67,7 @@ clock-card .clock-sub {
 clock-card .clock-heading {
     display: flex;
     flex-direction: column;
-    gap: var(--space-4xs);
+    gap: var(--space-xs);
 }
 
 clock-card .clock-eyebrow {
