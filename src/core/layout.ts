@@ -8,22 +8,29 @@ export type WidgetLayout = {
 export const layout: Record<string, WidgetLayout> = {
   'clock-card': {
     col: 0,
-    row: 4,
-    colSpan: 2,
+    row: 0,
+    colSpan: 3,
     rowSpan: 2,
   },
 
   'xkcd-card': {
     col: 0,
-    row: 0,
-    colSpan: 2,
+    row: 2,
+    colSpan: 3,
     rowSpan: 4,
   },
 
   'mensa-card': {
-    col: 2,
+    col: 3,
     row: 0,
-    colSpan: 2,
+    colSpan: 3,
+    rowSpan: 6,
+  },
+
+  'vrt-card': {
+    col: 6,
+    row: 0,
+    colSpan: 4,
     rowSpan: 6,
   },
 };

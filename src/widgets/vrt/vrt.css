@@ -1,0 +1,125 @@
+vrt-card {
+    align-self: start;
+}
+
+vrt-card .vrt-card {
+    background: radial-gradient(120% 120% at 20% -10%, rgba(126, 161, 255, 0.14), transparent 55%),
+    radial-gradient(120% 120% at 80% 0%, rgba(129, 230, 217, 0.16), transparent 50%),
+    var(--color-card);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: var(--shadow-sm), 0 18px 40px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: fit-content;
+}
+
+vrt-card .vrt-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+vrt-card .vrt-eyebrow {
+    margin: 0;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: var(--font-size-xs);
+}
+
+vrt-card .vrt-header h2 {
+    margin: var(--space-2xs) 0 0 0;
+}
+
+vrt-card .vrt-meta {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    padding: var(--space-2xs) var(--space-xs);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    white-space: nowrap;
+}
+
+vrt-card .vrt-head {
+    display: grid;
+    grid-template-columns: 74px 1fr 74px 86px 96px;
+    gap: var(--space-sm);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0 var(--space-sm) var(--space-xs) var(--space-sm);
+}
+
+vrt-card .vrt-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+vrt-card .vrt-item {
+    padding: var(--space-sm);
+    border-radius: var(--radius-sm);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+vrt-card .vrt-row {
+    display: grid;
+    grid-template-columns: 74px 1fr 74px 86px 96px;
+    gap: var(--space-sm);
+    align-items: center;
+}
+
+vrt-card .vrt-line {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+}
+
+vrt-card .vrt-direction {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+vrt-card .vrt-plan,
+vrt-card .vrt-dep {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+vrt-card .vrt-delay {
+    margin-left: var(--space-xs);
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+}
+
+vrt-card .vrt-delay.late {
+    background: rgba(236, 72, 153, 0.12);
+    border-color: rgba(236, 72, 153, 0.35);
+    color: var(--color-text);
+}
+
+.hidden {
+    display: none;
+}
+
+vrt-card .vrt-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    will-change: transform;
+}

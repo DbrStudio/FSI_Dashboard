@@ -99,8 +99,8 @@ function createPriceBadges(dish: Dish): HTMLElement {
   container.className = 'mensa-prices';
 
   const prices = [
-    { label: 'Mitarbeitende', emoji: '👩‍💼', value: dish.price_employee },
     { label: 'Studierende', emoji: '🎓', value: dish.price_student },
+    { label: 'Mitarbeitende', emoji: '👩‍💼', value: dish.price_employee },
     { label: 'Gäste', emoji: '👥', value: dish.price_guest },
   ];
 
