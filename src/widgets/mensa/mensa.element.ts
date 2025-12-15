@@ -167,7 +167,7 @@ class MensaCard extends HTMLElement {
       const originalHeight = inner.scrollHeight / 2;
       if (originalHeight <= list.clientHeight) return;
 
-      const speedPxPerSec = 64;
+      const speedPxPerSec = 32;
 
       let pos = 0;
       let lastTs: number | null = null;
