@@ -7,41 +7,78 @@ clock-card .clock-card {
     height: 100%;
     display: grid;
     grid-template-rows: auto 1fr auto;
-    gap: var(--space-sm);
+    gap: var(--space-md);
+    background: radial-gradient(120% 120% at 20% -10%, rgba(126, 161, 255, 0.14), transparent 55%),
+        radial-gradient(120% 120% at 80% 0%, rgba(129, 230, 217, 0.16), transparent 50%),
+        var(--color-card);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: var(--shadow-sm), 0 18px 40px rgba(0, 0, 0, 0.35);
 }
 
 clock-card .clock-top {
     display: flex;
-    align-items: baseline;
+    align-items: flex-end;
     justify-content: space-between;
     gap: var(--space-md);
+    margin-bottom: var(--space-sm);
 }
 
 clock-card h2 {
     margin: 0;
-    font-size: var(--font-size-md);
-    color: var(--color-text-muted);
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
+    font-size: var(--font-size-lg);
+    color: var(--color-text);
+    font-weight: 700;
+    letter-spacing: 0.01em;
 }
 
 clock-card .clock-date {
-    color: var(--color-text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    color: var(--color-text);
     font-size: var(--font-size-sm);
     white-space: nowrap;
+    padding: var(--space-3xs) var(--space-sm);
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 clock-card .clock-time {
     align-self: end;
-    font-size: clamp(2.5rem, 7vw, 6rem);
+    font-size: clamp(2.75rem, 7vw, 6.25rem);
     font-weight: 800;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
     line-height: 0.95;
+    color: var(--color-text);
+    text-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 clock-card .clock-sub {
     align-self: start;
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3xs);
+    padding: var(--space-3xs) var(--space-xs);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+clock-card .clock-heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4xs);
+}
+
+clock-card .clock-eyebrow {
+    margin: 0;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
 }
