@@ -32,9 +32,9 @@ const FILTER_META: Record<FilterType, { icon: string; label: string }> = {
   LAKTOSE: { icon: '🚫🥛', label: 'Laktosefrei' },
   ALKOHOL: { icon: '🚫🍷', label: 'Alkoholfrei' },
   GEFLUEGEL: { icon: '🍗', label: 'Geflügel' },
-  FISCH: { icon: '🐟', label: 'Fisch' },
+  FISCH: { icon: '🦈', label: 'Fisch' },
   STUDYFIT: { icon: '💪', label: 'StudyFit' },
-  KLIMATELLER: { icon: '🜨', label: 'Klimateller' },
+  KLIMATELLER: { icon: '🌐', label: 'Klimateller' },
   UNKNOWN: { icon: '❔', label: 'Unbekannt' },
 };
 
