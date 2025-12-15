@@ -23,6 +23,8 @@ type Dish = {
   price_employee: number;
   filters?: FilterType[];
   filter_list?: string[];
+  image_id?: string | null;
+  image_url?: string | null;
 };
 
 const FILTER_META: Record<FilterType, { icon: string; label: string }> = {
@@ -99,8 +101,8 @@ function createPriceBadges(dish: Dish): HTMLElement {
   container.className = 'mensa-prices';
 
   const prices = [
-    { label: 'Studierende', emoji: '🎓', value: dish.price_student },
-    { label: 'Mitarbeitende', emoji: '👩‍💼', value: dish.price_employee },
+    { label: 'Studis', emoji: '🎓', value: dish.price_student },
+    { label: 'Mitarbeiter', emoji: '👩‍💼', value: dish.price_employee },
     { label: 'Gäste', emoji: '👥', value: dish.price_guest },
   ];
 
@@ -236,23 +238,41 @@ class MensaCard extends HTMLElement {
         label.className = 'mensa-label';
         label.textContent = dish.label;
 
-        const header = document.createElement('div');
-        header.className = 'mensa-item-header';
+        const priceBadges = createPriceBadges(dish);
+
+        const main = document.createElement('div');
+        main.className = 'mensa-main';
+
+        const imgWrap = document.createElement('div');
+        imgWrap.className = 'mensa-img-wrap';
+
+        const img = document.createElement('img');
+        img.className = 'mensa-img';
+        img.alt = dish.label;
+
+        const src =
+          dish.image_url ??
+          (dish.image_id
+            ? `https://www.app-auf-den-teller.de/eo/media?s=mensa-startseite&id=${dish.image_id}`
+            : null);
+
+        if (src) {
+          img.src = src;
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          imgWrap.appendChild(img);
+        }
 
         const title = document.createElement('div');
         title.className = 'mensa-title';
         title.textContent = dish.title;
         title.title = dish.title_intern;
 
-        const priceBadges = createPriceBadges(dish);
-
-        header.appendChild(title);
-        header.appendChild(priceBadges);
+        main.append(imgWrap, title);
 
         const filters = createFilterChips(dish.filters ?? dish.filter_list);
 
-        li.appendChild(label);
-        li.appendChild(header);
+        li.append(label, priceBadges, main);
         if (filters) li.appendChild(filters);
 
         list.appendChild(li);

@@ -98,11 +98,12 @@ mensa-card .mensa-price {
 
 mensa-card .mensa-prices {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: var(--space-2xs);
-    align-items: end;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
     flex: 1;
+    flex-wrap: wrap;
 }
 
 mensa-card .mensa-price-emoji {
@@ -183,4 +184,34 @@ mensa-card .mensa-inner {
     flex-direction: column;
     gap: var(--space-sm);
     will-change: transform;
+}
+
+mensa-card .mensa-main {
+    margin: var(--space-sm) var(--space-2xs);
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row-reverse;
+    gap: var(--space-sm);
+}
+
+mensa-card .mensa-img-wrap {
+    flex: 0 0 auto;
+    width: 8rem;
+    height: 6rem;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+mensa-card .mensa-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+mensa-card .mensa-title {
+    flex: 1 1 auto;
+    min-width: 0;
 }
