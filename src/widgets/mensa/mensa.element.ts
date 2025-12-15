@@ -131,7 +131,6 @@ function createPriceBadges(dish: Dish): HTMLElement {
 
 class MensaCard extends HTMLElement {
   private scrollAnimation?: number;
-  private scrollDirection: 1 | -1 = 1;
 
   private stopAutoScroll(): void {
     if (this.scrollAnimation) {
@@ -143,59 +142,60 @@ class MensaCard extends HTMLElement {
   private startAutoScroll(list: HTMLUListElement): void {
     this.stopAutoScroll();
 
-    const baseContentHeight = list.scrollHeight;
-    if (baseContentHeight <= list.clientHeight) return;
+    requestAnimationFrame(() => {
+      if (!list.isConnected || !list.children.length) return;
 
-    if (!list.dataset.loopDuplicated) {
-      const clones = Array.from(list.children, (child) => child.cloneNode(true));
-      list.append(...clones);
-      list.dataset.loopDuplicated = 'true';
-    }
+      // Ensure inner wrapper
+      let inner = list.querySelector<HTMLDivElement>('.mensa-inner');
+      if (!inner) {
+        inner = document.createElement('div');
+        inner.className = 'mensa-inner';
 
-    // Speed in pixels per second
-    const speedPxPerSec = 64;
-
-    // Pause at the wrap point (ms)
-    const wrapPauseMs = 500;
-
-    let pausedUntil: number | null = null;
-    let lastTs: number | null = null;
-
-    // Float position, independent of scrollTop rounding
-    let pos = 0;
-
-    const animate = (ts: number): void => {
-      if (list.scrollHeight <= list.clientHeight) {
-        this.stopAutoScroll();
-        return;
+        while (list.firstChild) {
+          inner.appendChild(list.firstChild);
+        }
+        list.appendChild(inner);
       }
 
-      if (pausedUntil && ts < pausedUntil) {
+      // Clone content once
+      if (!inner.dataset.cloned) {
+        const clones = Array.from(inner.children, (c) => c.cloneNode(true));
+        inner.append(...clones);
+        inner.dataset.cloned = 'true';
+      }
+
+      const originalHeight = inner.scrollHeight / 2;
+      if (originalHeight <= list.clientHeight) return;
+
+      const speedPxPerSec = 64;
+
+      let pos = 0;
+      let lastTs: number | null = null;
+
+      const animate = (ts: number): void => {
+        if (!list.isConnected) {
+          this.stopAutoScroll();
+          return;
+        }
+
+        if (lastTs === null) lastTs = ts;
+        let dt = (ts - lastTs) / 1000;
         lastTs = ts;
+        dt = Math.min(dt, 0.05);
+
+        pos += speedPxPerSec * dt;
+        pos %= originalHeight;
+
+        // 🚀 perfectly smooth, sub-pixel, no snapping
+        inner.style.transform = `translateY(${-pos}px)`;
+
         this.scrollAnimation = requestAnimationFrame(animate);
-        return;
-      }
+      };
 
-      if (lastTs === null) lastTs = ts;
-      const dtSec = (ts - lastTs) / 1000;
-      lastTs = ts;
-
-      pos += speedPxPerSec * dtSec;
-
-      if (pos >= baseContentHeight) {
-        pos -= baseContentHeight;
-        pausedUntil = ts + wrapPauseMs;
-      } else {
-        pausedUntil = null;
-      }
-
-      list.scrollTop = Math.floor(pos);
+      pos = 0;
+      lastTs = null;
       this.scrollAnimation = requestAnimationFrame(animate);
-    };
-
-    list.scrollTop = 0;
-    pos = 0;
-    this.scrollAnimation = requestAnimationFrame(animate);
+    });
   }
 
   disconnectedCallback(): void {
@@ -213,7 +213,6 @@ class MensaCard extends HTMLElement {
     const date = new Date();
     const dateParam = yyyymmdd(date);
 
-    // Standort 4 fixed for now (you can make it configurable later via layout registry if you want)
     const url = `/api/mensa/get_dishes?date=${dateParam}&standort=4`;
 
     meta.textContent = `${date.toLocaleDateString('de-DE')} · Studierende`;
@@ -225,7 +224,9 @@ class MensaCard extends HTMLElement {
       const dishes = (await res.json()) as Dish[];
       if (!Array.isArray(dishes) || dishes.length === 0) throw new Error('No dishes');
 
+      // Rebuild list (this also removes clones from previous runs)
       list.innerHTML = '';
+      delete list.dataset.originalCount;
 
       for (const dish of dishes) {
         const li = document.createElement('li');
@@ -260,7 +261,6 @@ class MensaCard extends HTMLElement {
       this.startAutoScroll(list);
     } catch (e) {
       error.classList.remove('hidden');
-      // Optional: meta hint so you immediately see the dateParam when debugging
       meta.textContent = `Error · ${dateParam}`;
       console.warn('MensaCard failed:', e);
     }
