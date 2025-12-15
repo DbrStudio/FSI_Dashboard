@@ -130,6 +130,51 @@ function createPriceBadges(dish: Dish): HTMLElement {
 }
 
 class MensaCard extends HTMLElement {
+  private scrollAnimation?: number;
+  private scrollDirection: 1 | -1 = 1;
+
+  private stopAutoScroll(): void {
+    if (this.scrollAnimation) {
+      cancelAnimationFrame(this.scrollAnimation);
+      this.scrollAnimation = undefined;
+    }
+  }
+
+  private startAutoScroll(list: HTMLUListElement): void {
+    this.stopAutoScroll();
+
+    const animate = (): void => {
+      const { scrollHeight, clientHeight, scrollTop } = list;
+      if (scrollHeight <= clientHeight) {
+        this.stopAutoScroll();
+        return;
+      }
+
+      const maxScrollTop = scrollHeight - clientHeight;
+      const nextScrollTop = scrollTop + this.scrollDirection * 0.5;
+
+      if (nextScrollTop >= maxScrollTop) {
+        list.scrollTop = maxScrollTop;
+        this.scrollDirection = -1;
+      } else if (nextScrollTop <= 0) {
+        list.scrollTop = 0;
+        this.scrollDirection = 1;
+      } else {
+        list.scrollTop = nextScrollTop;
+      }
+
+      this.scrollAnimation = requestAnimationFrame(animate);
+    };
+
+    list.scrollTop = 0;
+    this.scrollDirection = 1;
+    this.scrollAnimation = requestAnimationFrame(animate);
+  }
+
+  disconnectedCallback(): void {
+    this.stopAutoScroll();
+  }
+
   async connectedCallback(): Promise<void> {
     this.innerHTML = template;
 
@@ -159,31 +204,33 @@ class MensaCard extends HTMLElement {
         const li = document.createElement('li');
         li.className = 'mensa-item';
 
-        const header = document.createElement('div');
-        header.className = 'mensa-item-header';
-
         const label = document.createElement('div');
         label.className = 'mensa-label';
         label.textContent = dish.label;
 
-        const priceBadges = createPriceBadges(dish);
-
-        header.appendChild(label);
-        header.appendChild(priceBadges);
+        const header = document.createElement('div');
+        header.className = 'mensa-item-header';
 
         const title = document.createElement('div');
         title.className = 'mensa-title';
         title.textContent = dish.title;
         title.title = dish.title_intern;
 
+        const priceBadges = createPriceBadges(dish);
+
+        header.appendChild(title);
+        header.appendChild(priceBadges);
+
         const filters = createFilterChips(dish.filters ?? dish.filter_list);
 
+        li.appendChild(label);
         li.appendChild(header);
-        li.appendChild(title);
         if (filters) li.appendChild(filters);
 
         list.appendChild(li);
       }
+
+      this.startAutoScroll(list);
     } catch (e) {
       error.classList.remove('hidden');
       // Optional: meta hint so you immediately see the dateParam when debugging
