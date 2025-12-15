@@ -143,31 +143,58 @@ class MensaCard extends HTMLElement {
   private startAutoScroll(list: HTMLUListElement): void {
     this.stopAutoScroll();
 
-    const animate = (): void => {
-      const { scrollHeight, clientHeight, scrollTop } = list;
-      if (scrollHeight <= clientHeight) {
+    const baseContentHeight = list.scrollHeight;
+    if (baseContentHeight <= list.clientHeight) return;
+
+    if (!list.dataset.loopDuplicated) {
+      const clones = Array.from(list.children, (child) => child.cloneNode(true));
+      list.append(...clones);
+      list.dataset.loopDuplicated = 'true';
+    }
+
+    // Speed in pixels per second
+    const speedPxPerSec = 64;
+
+    // Pause at the wrap point (ms)
+    const wrapPauseMs = 500;
+
+    let pausedUntil: number | null = null;
+    let lastTs: number | null = null;
+
+    // Float position, independent of scrollTop rounding
+    let pos = 0;
+
+    const animate = (ts: number): void => {
+      if (list.scrollHeight <= list.clientHeight) {
         this.stopAutoScroll();
         return;
       }
 
-      const maxScrollTop = scrollHeight - clientHeight;
-      const nextScrollTop = scrollTop + this.scrollDirection * 0.5;
-
-      if (nextScrollTop >= maxScrollTop) {
-        list.scrollTop = maxScrollTop;
-        this.scrollDirection = -1;
-      } else if (nextScrollTop <= 0) {
-        list.scrollTop = 0;
-        this.scrollDirection = 1;
-      } else {
-        list.scrollTop = nextScrollTop;
+      if (pausedUntil && ts < pausedUntil) {
+        lastTs = ts;
+        this.scrollAnimation = requestAnimationFrame(animate);
+        return;
       }
 
+      if (lastTs === null) lastTs = ts;
+      const dtSec = (ts - lastTs) / 1000;
+      lastTs = ts;
+
+      pos += speedPxPerSec * dtSec;
+
+      if (pos >= baseContentHeight) {
+        pos -= baseContentHeight;
+        pausedUntil = ts + wrapPauseMs;
+      } else {
+        pausedUntil = null;
+      }
+
+      list.scrollTop = Math.floor(pos);
       this.scrollAnimation = requestAnimationFrame(animate);
     };
 
     list.scrollTop = 0;
-    this.scrollDirection = 1;
+    pos = 0;
     this.scrollAnimation = requestAnimationFrame(animate);
   }
 
