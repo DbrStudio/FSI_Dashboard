@@ -7,7 +7,48 @@
 html, body {
     margin: 0;
     height: 100%;
-    background: var(--color-bg);
+    background: transparent;
+/ / background: var(--color-bg);
     color: var(--color-text);
-    font-family: var(--font-family-base);
+    font-family: var(--font-family-base), serif;
 }
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background: linear-gradient(
+            0deg,
+            #0b0f1a,
+            #0b0f1a
+    ),
+    linear-gradient(
+            120deg,
+            rgba(126, 161, 255, 0.4),
+            rgba(129, 230, 217, 0.35),
+            rgba(255, 138, 223, 0.22),
+            rgba(126, 161, 255, 0.4)
+    );
+    background-size:
+        100% 100%,
+        200% 200%;
+
+    background-blend-mode: lighten;
+    animation: dashboardGradient 18s ease-in-out infinite;
+}
+
+@keyframes dashboardGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
