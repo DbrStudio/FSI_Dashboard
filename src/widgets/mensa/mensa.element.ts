@@ -131,7 +131,6 @@ function createPriceBadges(dish: Dish): HTMLElement {
 
 class MensaCard extends HTMLElement {
   private scrollAnimation?: number;
-  private scrollDirection: 1 | -1 = 1;
 
   private stopAutoScroll(): void {
     if (this.scrollAnimation) {
@@ -143,31 +142,46 @@ class MensaCard extends HTMLElement {
   private startAutoScroll(list: HTMLUListElement): void {
     this.stopAutoScroll();
 
-    const animate = (): void => {
-      const { scrollHeight, clientHeight, scrollTop } = list;
-      if (scrollHeight <= clientHeight) {
+    const baseContentHeight = list.scrollHeight;
+    if (baseContentHeight <= list.clientHeight) {
+      this.stopAutoScroll();
+      return;
+    }
+
+    if (!list.dataset.loopDuplicated) {
+      const clones = Array.from(list.children, (child) => child.cloneNode(true));
+      list.append(...clones);
+      list.dataset.loopDuplicated = 'true';
+    }
+
+    let pausedUntil: number | null = null;
+    const step = 0.5;
+
+    const animate = (timestamp: number): void => {
+      if (list.scrollHeight <= list.clientHeight) {
         this.stopAutoScroll();
         return;
       }
 
-      const maxScrollTop = scrollHeight - clientHeight;
-      const nextScrollTop = scrollTop + this.scrollDirection * 0.5;
+      if (pausedUntil && timestamp < pausedUntil) {
+        this.scrollAnimation = requestAnimationFrame(animate);
+        return;
+      }
 
-      if (nextScrollTop >= maxScrollTop) {
-        list.scrollTop = maxScrollTop;
-        this.scrollDirection = -1;
-      } else if (nextScrollTop <= 0) {
-        list.scrollTop = 0;
-        this.scrollDirection = 1;
+      const nextScrollTop = list.scrollTop + step;
+
+      if (nextScrollTop >= baseContentHeight) {
+        list.scrollTop = nextScrollTop - baseContentHeight;
+        pausedUntil = timestamp + 500;
       } else {
         list.scrollTop = nextScrollTop;
+        pausedUntil = null;
       }
 
       this.scrollAnimation = requestAnimationFrame(animate);
     };
 
     list.scrollTop = 0;
-    this.scrollDirection = 1;
     this.scrollAnimation = requestAnimationFrame(animate);
   }
 
