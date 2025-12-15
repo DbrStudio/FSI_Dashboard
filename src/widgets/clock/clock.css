@@ -55,13 +55,38 @@ clock-card .clock-sub {
     align-self: start;
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-xs);
-    padding: var(--space-xs) var(--space-xs);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-sm);
+    padding: var(--space-sm);
     background: rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-sm);
     border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+clock-card .weather-main {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+    color: var(--color-text);
+}
+
+clock-card .weather-temp {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+}
+
+clock-card .weather-desc {
+    text-transform: capitalize;
+    font-family: "JetBrainsMono Nerd Font", "FiraCode Nerd Font", monospace;
+}
+
+clock-card .weather-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
 }
 
 clock-card .clock-heading {

@@ -8,7 +8,6 @@ html, body {
     margin: 0;
     height: 100%;
     background: transparent;
-/ / background: var(--color-bg);
     color: var(--color-text);
     font-family: var(--font-family-base), serif;
 }
@@ -52,3 +51,34 @@ body::before {
     }
 }
 
+@font-face {
+    font-family: "JetBrainsMono Nerd Font";
+    src: url("/public/assets/fonts/JetBrainsMonoNerdFont-Regular.ttf") format("ttf");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "JetBrainsMono Nerd Font";
+    src: url("/public/assets/fonts/JetBrainsMonoNerdFont-Bold.ttf") format("ttf");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "FiraCode Nerd Font";
+    src: url("/public/assets/fonts/FiraCodeNerdFont-Regular.ttf") format("ttf");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "FiraCode Nerd Font";
+    src: url("/public/assets/fonts/FiraCodeNerdFont-Bold.ttf") format("ttf");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
