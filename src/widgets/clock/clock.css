@@ -21,6 +21,7 @@ clock-card .clock-top {
     justify-content: space-between;
     gap: var(--space-md);
     margin-bottom: var(--space-sm);
+    flex-wrap: wrap;
 }
 
 clock-card h2 {
@@ -33,7 +34,7 @@ clock-card h2 {
 
 clock-card .clock-date {
     color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
+    font-size: clamp(var(--font-size-xs), 2vw, var(--font-size-sm));
     padding: var(--space-2xs) var(--space-xs);
     background: rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-sm);
@@ -43,12 +44,26 @@ clock-card .clock-date {
 
 clock-card .clock-time {
     align-self: end;
-    font-size: clamp(2.75rem, 7vw, 6.25rem);
+    display: inline-flex;
+    align-items: baseline;
+    gap: clamp(var(--space-3xs), 1vw, var(--space-xs));
+    color: var(--color-text);
+    text-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+clock-card .clock-main {
+    font-size: clamp(2.25rem, 7vw, 5.75rem);
     font-weight: 800;
     letter-spacing: 0.04em;
     line-height: 0.95;
-    color: var(--color-text);
-    text-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+clock-card .clock-seconds {
+    font-size: clamp(1.25rem, 4vw, 2.75rem);
+    font-weight: 700;
+    color: var(--color-text-muted);
+    line-height: 0.95;
+    transform: translateY(6%);
 }
 
 clock-card .clock-sub {
@@ -56,9 +71,9 @@ clock-card .clock-sub {
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: var(--space-sm);
-    padding: var(--space-sm);
+    padding: clamp(var(--space-xs), 2vw, var(--space-sm));
     background: rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-sm);
     border: 1px solid rgba(255, 255, 255, 0.05);

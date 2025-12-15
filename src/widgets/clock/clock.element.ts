@@ -27,19 +27,21 @@ class ClockCard extends HTMLElement {
   connectedCallback(): void {
     this.innerHTML = template;
 
-    const timeEl = this.querySelector('.clock-time') as HTMLDivElement | null;
+    const mainTimeEl = this.querySelector('.clock-main') as HTMLSpanElement | null;
+    const secondsEl = this.querySelector('.clock-seconds') as HTMLSpanElement | null;
     const dateEl = this.querySelector('.clock-date') as HTMLDivElement | null;
     const tempEl = this.querySelector('.weather-temp') as HTMLSpanElement | null;
     const descEl = this.querySelector('.weather-desc') as HTMLSpanElement | null;
     const locationEl = this.querySelector('.weather-location') as HTMLSpanElement | null;
     const updatedEl = this.querySelector('.weather-updated') as HTMLSpanElement | null;
 
-    if (!timeEl || !dateEl || !tempEl || !descEl || !locationEl || !updatedEl) return;
+    if (!dateEl || !tempEl || !descEl || !locationEl || !updatedEl || !mainTimeEl || !secondsEl) return;
 
     const tick = (): void => {
       const now = new Date();
 
-      timeEl.textContent = `${two(now.getHours())}:${two(now.getMinutes())}:${two(now.getSeconds())}`;
+      mainTimeEl.textContent = `${two(now.getHours())}:${two(now.getMinutes())}`;
+      secondsEl.textContent = `:${two(now.getSeconds())}`;
 
       dateEl.textContent = now.toLocaleDateString('de-DE', {
         weekday: 'short',
