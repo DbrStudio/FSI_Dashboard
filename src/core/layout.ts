@@ -13,6 +13,13 @@ export const layout: Record<string, WidgetLayout> = {
     rowSpan: 2,
   },
 
+  'events-card': {
+    col: 3,
+    row: 0,
+    colSpan: 3,
+    rowSpan: 3,
+  },
+
   'xkcd-card': {
     col: 0,
     row: 2,
@@ -22,9 +29,9 @@ export const layout: Record<string, WidgetLayout> = {
 
   'mensa-card': {
     col: 3,
-    row: 2,
+    row: 3,
     colSpan: 3,
-    rowSpan: 4,
+    rowSpan: 3,
   },
 
   'vrt-card': {
