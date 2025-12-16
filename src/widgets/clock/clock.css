@@ -17,7 +17,7 @@ clock-card .clock-card {
 
 clock-card .clock-top {
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: space-between;
     gap: var(--clock-gap);
     margin-bottom: clamp(var(--space-2xs), 1.6cqw, var(--space-sm));
