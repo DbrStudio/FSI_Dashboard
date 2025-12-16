@@ -136,6 +136,8 @@ clock-card .weather-meta {
     clock-card .clock-card {
         --clock-padding: clamp(var(--space-2xs), 2.4cqw, var(--space-sm));
         --clock-gap: clamp(var(--space-2xs), 1.8cqw, var(--space-sm));
+        gap: var(--clock-gap);
+        padding: var(--clock-padding);
     }
 
     clock-card .clock-heading {
@@ -148,11 +150,6 @@ clock-card .weather-meta {
 
     clock-card .clock-date {
         text-align: left;
-    }
-
-    clock-card .clock-card {
-        gap: var(--clock-gap);
-        padding: var(--clock-padding);
     }
 }
 

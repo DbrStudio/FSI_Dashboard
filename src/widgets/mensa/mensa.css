@@ -48,6 +48,8 @@ mensa-card .mensa-title {
     font-size: var(--font-size-lg);
     line-height: 1.25;
     font-weight: 600;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 mensa-card .mensa-price {
@@ -170,9 +172,4 @@ mensa-card .mensa-img {
     height: 100%;
     object-fit: cover;
     display: block;
-}
-
-mensa-card .mensa-title {
-    flex: 1 1 auto;
-    min-width: 0;
 }
