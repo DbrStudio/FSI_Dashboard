@@ -6,8 +6,8 @@ clock-card {
 clock-card .clock-card {
     height: 100%;
     display: grid;
-    grid-template-rows: auto 1fr auto;
-    gap: var(--space-md);
+    grid-template-rows: auto auto auto;
+    gap: clamp(var(--space-sm), 3cqw, var(--space-lg));
     background: radial-gradient(120% 120% at 20% -10%, rgba(126, 161, 255, 0.14), transparent 55%),
         radial-gradient(120% 120% at 80% 0%, rgba(129, 230, 217, 0.16), transparent 50%),
         var(--color-card);
@@ -15,14 +15,15 @@ clock-card .clock-card {
     box-shadow: var(--shadow-sm), 0 18px 40px rgba(0, 0, 0, 0.35);
     container-type: inline-size;
     container-name: clock-card;
+    padding: clamp(var(--space-sm), 4cqw, var(--card-padding));
 }
 
 clock-card .clock-top {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: var(--space-md);
-    margin-bottom: var(--space-sm);
+    gap: clamp(var(--space-xs), 3cqw, var(--space-md));
+    margin-bottom: clamp(var(--space-2xs), 2cqw, var(--space-sm));
     flex-wrap: wrap;
 }
 
@@ -49,7 +50,7 @@ clock-card .clock-time {
     align-self: end;
     display: inline-flex;
     align-items: baseline;
-    gap: clamp(var(--space-3xs), 1vw, var(--space-xs));
+    gap: clamp(var(--space-4xs), 1.5cqw, var(--space-xs));
     color: var(--color-text);
     text-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.08);
     flex-wrap: wrap;
@@ -57,14 +58,14 @@ clock-card .clock-time {
 }
 
 clock-card .clock-main {
-    font-size: clamp(1.75rem, 18cqw, 6rem);
+    font-size: clamp(1.3rem, 16cqw, 6rem);
     font-weight: 800;
     letter-spacing: 0.04em;
     line-height: 0.95;
 }
 
 clock-card .clock-seconds {
-    font-size: clamp(1rem, 11cqw, 3rem);
+    font-size: clamp(0.9rem, 9cqw, 2.6rem);
     font-weight: 700;
     color: var(--color-text-muted);
     line-height: 0.95;
@@ -84,36 +85,47 @@ clock-card .clock-seconds {
     clock-card .clock-seconds {
         transform: none;
     }
+
+    clock-card .clock-sub {
+        grid-template-columns: 1fr;
+    }
+
+    clock-card .weather-main {
+        gap: var(--space-4xs);
+    }
 }
 
 clock-card .clock-sub {
     align-self: start;
-    font-size: var(--font-size-sm);
+    font-size: clamp(var(--font-size-xs), 2.5cqw, var(--font-size-sm));
     color: var(--color-text-muted);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: var(--space-sm);
-    padding: clamp(var(--space-xs), 2vw, var(--space-sm));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: clamp(var(--space-xs), 2cqw, var(--space-sm));
+    padding: clamp(var(--space-2xs), 3cqw, var(--space-sm));
     background: rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-sm);
     border: 1px solid rgba(255, 255, 255, 0.05);
+    min-height: 0;
 }
 
 clock-card .weather-main {
     display: flex;
-    align-items: baseline;
-    gap: var(--space-xs);
+    align-items: center;
+    gap: clamp(var(--space-3xs), 2cqw, var(--space-sm));
     color: var(--color-text);
+    flex-wrap: wrap;
 }
 
 clock-card .weather-temp {
-    font-size: var(--font-size-lg);
+    font-size: clamp(var(--font-size-md), 6cqw, var(--font-size-xl));
     font-weight: 700;
 }
 
 clock-card .weather-desc {
     text-transform: capitalize;
     font-family: "JetBrainsMono Nerd Font", "FiraCode Nerd Font", monospace;
+    font-size: clamp(var(--font-size-xs), 3cqw, var(--font-size-md));
 }
 
 clock-card .weather-meta {
@@ -121,7 +133,7 @@ clock-card .weather-meta {
     flex-direction: column;
     gap: var(--space-2xs);
     color: var(--color-text-muted);
-    font-size: var(--font-size-xs);
+    font-size: clamp(0.7rem, 2.5cqw, var(--font-size-xs));
 }
 
 clock-card .clock-heading {
@@ -153,10 +165,18 @@ clock-card .clock-eyebrow {
     }
 }
 
-@container clock-card (max-width: 320px) {
-    clock-card .clock-sub {
-        grid-template-columns: 1fr;
-        gap: var(--space-xs);
+@container clock-card (max-width: 300px) {
+    clock-card .clock-card {
+        gap: var(--space-sm);
+    }
+
+    clock-card .clock-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    clock-card .clock-date {
+        width: 100%;
     }
 
     clock-card .clock-time {
