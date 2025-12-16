@@ -7,7 +7,7 @@ clock-card .clock-card {
     height: 100%;
     display: grid;
     grid-template-rows: auto auto auto;
-    gap: clamp(var(--space-sm), 3cqw, var(--space-lg));
+    gap: clamp(var(--space-3xs), 2.5cqw, var(--space-lg));
     background: radial-gradient(120% 120% at 20% -10%, rgba(126, 161, 255, 0.14), transparent 55%),
         radial-gradient(120% 120% at 80% 0%, rgba(129, 230, 217, 0.16), transparent 50%),
         var(--color-card);
@@ -15,7 +15,7 @@ clock-card .clock-card {
     box-shadow: var(--shadow-sm), 0 18px 40px rgba(0, 0, 0, 0.35);
     container-type: inline-size;
     container-name: clock-card;
-    padding: clamp(var(--space-sm), 4cqw, var(--card-padding));
+    padding: clamp(var(--space-3xs), 3.5cqw, var(--card-padding));
 }
 
 clock-card .clock-top {
@@ -58,14 +58,14 @@ clock-card .clock-time {
 }
 
 clock-card .clock-main {
-    font-size: clamp(1.3rem, 16cqw, 6rem);
+    font-size: clamp(1.1rem, 13cqw, 5.5rem);
     font-weight: 800;
     letter-spacing: 0.04em;
     line-height: 0.95;
 }
 
 clock-card .clock-seconds {
-    font-size: clamp(0.9rem, 9cqw, 2.6rem);
+    font-size: clamp(0.75rem, 7cqw, 2.4rem);
     font-weight: 700;
     color: var(--color-text-muted);
     line-height: 0.95;
@@ -74,35 +74,48 @@ clock-card .clock-seconds {
 
 @container clock-card (max-width: 360px) {
     clock-card .clock-time {
-        gap: var(--space-4xs);
+        gap: var(--space-5xs);
         justify-content: flex-start;
     }
 
     clock-card .clock-main {
-        letter-spacing: 0.02em;
+        letter-spacing: 0.01em;
+        font-size: clamp(1rem, 11cqw, 3.6rem);
     }
 
     clock-card .clock-seconds {
         transform: none;
+        font-size: clamp(0.65rem, 6.5cqw, 1.8rem);
     }
 
     clock-card .clock-sub {
         grid-template-columns: 1fr;
+        gap: var(--space-4xs);
+        padding: clamp(var(--space-4xs), 2cqw, var(--space-xs));
     }
 
     clock-card .weather-main {
-        gap: var(--space-4xs);
+        gap: var(--space-5xs);
+        font-size: clamp(var(--font-size-2xs), 3cqw, var(--font-size-sm));
+    }
+
+    clock-card .weather-temp {
+        font-size: clamp(var(--font-size-sm), 5.5cqw, var(--font-size-lg));
+    }
+
+    clock-card .weather-desc {
+        font-size: clamp(var(--font-size-2xs), 3.5cqw, var(--font-size-sm));
     }
 }
 
 clock-card .clock-sub {
     align-self: start;
-    font-size: clamp(var(--font-size-xs), 2.5cqw, var(--font-size-sm));
+    font-size: clamp(var(--font-size-2xs), 2.3cqw, var(--font-size-sm));
     color: var(--color-text-muted);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: clamp(var(--space-xs), 2cqw, var(--space-sm));
-    padding: clamp(var(--space-2xs), 3cqw, var(--space-sm));
+    gap: clamp(var(--space-3xs), 1.8cqw, var(--space-sm));
+    padding: clamp(var(--space-3xs), 2.5cqw, var(--space-sm));
     background: rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-sm);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -133,7 +146,7 @@ clock-card .weather-meta {
     flex-direction: column;
     gap: var(--space-2xs);
     color: var(--color-text-muted);
-    font-size: clamp(0.7rem, 2.5cqw, var(--font-size-xs));
+    font-size: clamp(0.7rem, 2cqw, var(--font-size-xs));
 }
 
 clock-card .clock-heading {
@@ -163,6 +176,11 @@ clock-card .clock-eyebrow {
     clock-card .clock-date {
         text-align: left;
     }
+
+    clock-card .clock-card {
+        gap: clamp(var(--space-4xs), 2cqw, var(--space-md));
+        padding: clamp(var(--space-3xs), 3cqw, var(--space-sm));
+    }
 }
 
 @container clock-card (max-width: 300px) {
@@ -181,5 +199,28 @@ clock-card .clock-eyebrow {
 
     clock-card .clock-time {
         justify-content: flex-start;
+        gap: var(--space-5xs);
+    }
+
+    clock-card .clock-main {
+        font-size: clamp(0.9rem, 10cqw, 2.6rem);
+    }
+
+    clock-card .clock-seconds {
+        font-size: clamp(0.6rem, 5.5cqw, 1.4rem);
+    }
+
+    clock-card .clock-sub {
+        font-size: clamp(var(--font-size-3xs), 2cqw, var(--font-size-xs));
+        gap: var(--space-5xs);
+        padding: var(--space-5xs) var(--space-4xs);
+    }
+
+    clock-card .weather-main {
+        align-items: flex-start;
+    }
+
+    clock-card .weather-meta {
+        gap: var(--space-4xs);
     }
 }
