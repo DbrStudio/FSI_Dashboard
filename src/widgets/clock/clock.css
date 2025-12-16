@@ -6,15 +6,9 @@ clock-card {
 clock-card .clock-card {
     --clock-padding: clamp(var(--space-2xs), 2.8cqw, var(--space-md));
     --clock-gap: clamp(var(--space-2xs), 2.2cqw, var(--space-md));
-    height: 100%;
     display: grid;
     grid-template-rows: auto auto auto;
     gap: var(--clock-gap);
-    background: radial-gradient(120% 120% at 20% -10%, rgba(126, 161, 255, 0.14), transparent 55%),
-        radial-gradient(120% 120% at 80% 0%, rgba(129, 230, 217, 0.16), transparent 50%),
-        var(--color-card);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: var(--shadow-sm), 0 18px 40px rgba(0, 0, 0, 0.35);
     container-type: inline-size;
     container-name: clock-card;
     padding: var(--clock-padding);
@@ -22,29 +16,15 @@ clock-card .clock-card {
 
 clock-card .clock-top {
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: space-between;
     gap: var(--clock-gap);
     margin-bottom: clamp(var(--space-2xs), 1.6cqw, var(--space-sm));
     flex-wrap: wrap;
 }
 
-clock-card h2 {
-    margin: 0;
-    font-size: var(--font-size-lg);
-    color: var(--color-text);
-    font-weight: 700;
-    letter-spacing: 0.01em;
-}
-
 clock-card .clock-date {
-    color: var(--color-text-muted);
     font-size: clamp(var(--font-size-xs), 2vw, var(--font-size-sm));
-    padding: var(--space-2xs) var(--space-xs);
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: var(--radius-sm);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    white-space: normal;
     max-width: 100%;
 }
 
@@ -150,21 +130,6 @@ clock-card .weather-meta {
     gap: var(--space-2xs);
     color: var(--color-text-muted);
     font-size: clamp(0.7rem, 2cqw, var(--font-size-xs));
-}
-
-clock-card .clock-heading {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-}
-
-clock-card .clock-eyebrow {
-    margin: 0;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: var(--font-size-xs);
-    font-weight: 600;
 }
 
 @container clock-card (max-width: 420px) {
