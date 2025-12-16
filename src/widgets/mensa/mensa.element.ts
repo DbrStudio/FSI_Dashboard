@@ -216,11 +216,7 @@ class MensaCard extends HTMLElement {
     }
   }
 
-  private scheduleNextRefresh(
-    meta: HTMLElement,
-    list: HTMLUListElement,
-    error: HTMLElement,
-  ): void {
+  private scheduleNextRefresh(meta: HTMLElement, list: HTMLUListElement, error: HTMLElement): void {
     if (this.refreshTimeout) {
       clearTimeout(this.refreshTimeout);
     }
@@ -242,7 +238,7 @@ class MensaCard extends HTMLElement {
 
     const url = `/api/mensa/get_dishes?date=${dateParam}&standort=4`;
 
-    meta.textContent = `${date.toLocaleDateString('de-DE')} · Studierende`;
+    meta.textContent = `${date.toLocaleDateString('de-DE')}`;
     error.classList.add('hidden');
 
     try {
