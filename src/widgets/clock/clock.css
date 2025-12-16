@@ -41,7 +41,8 @@ clock-card .clock-date {
     background: rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-sm);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    white-space: nowrap;
+    white-space: normal;
+    max-width: 100%;
 }
 
 clock-card .clock-time {
@@ -90,7 +91,7 @@ clock-card .clock-sub {
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: var(--space-sm);
     padding: clamp(var(--space-xs), 2vw, var(--space-sm));
     background: rgba(255, 255, 255, 0.05);
@@ -136,4 +137,29 @@ clock-card .clock-eyebrow {
     letter-spacing: 0.08em;
     font-size: var(--font-size-xs);
     font-weight: 600;
+}
+
+@container clock-card (max-width: 420px) {
+    clock-card .clock-heading {
+        display: none;
+    }
+
+    clock-card .clock-top {
+        align-items: center;
+    }
+
+    clock-card .clock-date {
+        text-align: left;
+    }
+}
+
+@container clock-card (max-width: 320px) {
+    clock-card .clock-sub {
+        grid-template-columns: 1fr;
+        gap: var(--space-xs);
+    }
+
+    clock-card .clock-time {
+        justify-content: flex-start;
+    }
 }
