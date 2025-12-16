@@ -1,7 +1,14 @@
 import template from './xkcd.template.html?raw';
 import './xkcd.css';
 
-type XkcdResponse = { img: string; alt: string; safe_title: string };
+type XkcdResponse = {
+  img: string;
+  alt: string;
+  safe_title: string;
+  day: string;
+  month: string;
+  year: string;
+};
 class XkcdCard extends HTMLElement {
   async connectedCallback() {
     this.innerHTML = template;
@@ -17,7 +24,13 @@ class XkcdCard extends HTMLElement {
 
       img.src = data.img;
       img.alt = data.alt;
-      caption.textContent = data.safe_title;
+      const formattedDate = [data.day, data.month, data.year].every(Boolean)
+        ? `${data.day.padStart(2, '0')}.${data.month.padStart(2, '0')}.${data.year}`
+        : '';
+
+      caption.textContent = formattedDate
+        ? `${data.safe_title} — ${formattedDate}`
+        : data.safe_title;
     } catch {
       caption.textContent = 'Could not load XKCD';
     }
