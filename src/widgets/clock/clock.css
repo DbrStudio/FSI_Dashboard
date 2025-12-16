@@ -4,10 +4,12 @@ clock-card {
 }
 
 clock-card .clock-card {
+    --clock-padding: clamp(var(--space-4xs), 2.8cqw, var(--space-md));
+    --clock-gap: clamp(var(--space-4xs), 2.2cqw, var(--space-md));
     height: 100%;
     display: grid;
     grid-template-rows: auto auto auto;
-    gap: clamp(var(--space-3xs), 2.5cqw, var(--space-lg));
+    gap: var(--clock-gap);
     background: radial-gradient(120% 120% at 20% -10%, rgba(126, 161, 255, 0.14), transparent 55%),
         radial-gradient(120% 120% at 80% 0%, rgba(129, 230, 217, 0.16), transparent 50%),
         var(--color-card);
@@ -15,15 +17,15 @@ clock-card .clock-card {
     box-shadow: var(--shadow-sm), 0 18px 40px rgba(0, 0, 0, 0.35);
     container-type: inline-size;
     container-name: clock-card;
-    padding: clamp(var(--space-3xs), 3.5cqw, var(--card-padding));
+    padding: var(--clock-padding);
 }
 
 clock-card .clock-top {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: clamp(var(--space-xs), 3cqw, var(--space-md));
-    margin-bottom: clamp(var(--space-2xs), 2cqw, var(--space-sm));
+    gap: var(--clock-gap);
+    margin-bottom: clamp(var(--space-4xs), 1.6cqw, var(--space-sm));
     flex-wrap: wrap;
 }
 
@@ -114,8 +116,9 @@ clock-card .clock-sub {
     color: var(--color-text-muted);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: clamp(var(--space-3xs), 1.8cqw, var(--space-sm));
-    padding: clamp(var(--space-3xs), 2.5cqw, var(--space-sm));
+    gap: var(--clock-gap);
+    padding: clamp(var(--space-5xs), 1.6cqw, var(--space-xs))
+        clamp(var(--space-4xs), 1.8cqw, var(--clock-padding));
     background: rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-sm);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -165,6 +168,11 @@ clock-card .clock-eyebrow {
 }
 
 @container clock-card (max-width: 420px) {
+    clock-card .clock-card {
+        --clock-padding: clamp(var(--space-5xs), 2.4cqw, var(--space-sm));
+        --clock-gap: clamp(var(--space-5xs), 1.8cqw, var(--space-sm));
+    }
+
     clock-card .clock-heading {
         display: none;
     }
@@ -178,14 +186,15 @@ clock-card .clock-eyebrow {
     }
 
     clock-card .clock-card {
-        gap: clamp(var(--space-4xs), 2cqw, var(--space-md));
-        padding: clamp(var(--space-3xs), 3cqw, var(--space-sm));
+        gap: var(--clock-gap);
+        padding: var(--clock-padding);
     }
 }
 
 @container clock-card (max-width: 300px) {
     clock-card .clock-card {
-        gap: var(--space-sm);
+        --clock-padding: clamp(var(--space-5xs), 2cqw, var(--space-xs));
+        --clock-gap: clamp(var(--space-5xs), 1.5cqw, var(--space-sm));
     }
 
     clock-card .clock-top {
