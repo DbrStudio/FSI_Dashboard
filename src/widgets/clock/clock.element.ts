@@ -7,12 +7,19 @@ function weatherIcon(desc?: string): string {
   const d = desc.toLowerCase();
 
   if (d.includes('clear') || d.includes('klar')) return '󰖙';
-  if (d.includes('cloud') || d.includes('wolken') || d.includes('bedeckt')) return '󰖐';
+  if (d.includes('cloud') || d.includes('wolken') || d.includes('bedeckt') || d.includes('bewölkt'))
+    return '󰖐';
   if (d.includes('rain') || d.includes('drizzle') || d.includes('regen') || d.includes('schauer'))
     return '󰖗';
   if (d.includes('thunder') || d.includes('gewitter')) return '󰙾';
   if (d.includes('snow') || d.includes('schnee')) return '󰖘';
-  if (d.includes('fog') || d.includes('mist') || d.includes('haze') || d.includes('nebel') || d.includes('dunst'))
+  if (
+    d.includes('fog') ||
+    d.includes('mist') ||
+    d.includes('haze') ||
+    d.includes('nebel') ||
+    d.includes('dunst')
+  )
     return '󰖑';
 
   return '󰋙';
@@ -37,7 +44,8 @@ class ClockCard extends HTMLElement {
     const locationEl = this.querySelector('.weather-location') as HTMLSpanElement | null;
     const updatedEl = this.querySelector('.weather-updated') as HTMLSpanElement | null;
 
-    if (!dateEl || !tempEl || !descEl || !locationEl || !updatedEl || !mainTimeEl || !secondsEl) return;
+    if (!dateEl || !tempEl || !descEl || !locationEl || !updatedEl || !mainTimeEl || !secondsEl)
+      return;
 
     const tick = (): void => {
       const now = new Date();

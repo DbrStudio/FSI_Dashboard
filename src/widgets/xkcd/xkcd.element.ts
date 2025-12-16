@@ -1,7 +1,7 @@
 import template from './xkcd.template.html?raw';
 import './xkcd.css';
 
-const TWENTY_MINUTES_MS = 20 * 60 * 1000;
+const TIME_IN_MS = 5 * 60 * 1000; // 5 minute (m * s * ms)
 
 type XkcdResponse = {
   img: string;
@@ -30,7 +30,7 @@ class XkcdCard extends HTMLElement {
     this.stopAutoRefresh();
     this.refreshIntervalId = window.setInterval(() => {
       void this.loadComic(img, caption);
-    }, TWENTY_MINUTES_MS);
+    }, TIME_IN_MS);
   }
 
   private async loadComic(img: HTMLImageElement, caption: HTMLElement): Promise<void> {

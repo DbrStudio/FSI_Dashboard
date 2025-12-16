@@ -47,6 +47,7 @@ xkcd-card .comic-img {
     border-radius: var(--radius-sm);
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
     object-fit: contain;
+    flex-grow: 1;
 }
 
 xkcd-card .comic-caption {
