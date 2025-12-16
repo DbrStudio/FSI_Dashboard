@@ -6,12 +6,14 @@ function weatherIcon(desc?: string): string {
 
   const d = desc.toLowerCase();
 
-  if (d.includes('clear')) return '󰖙';
-  if (d.includes('cloud')) return '󰖐';
-  if (d.includes('rain') || d.includes('drizzle')) return '󰖗';
-  if (d.includes('thunder')) return '󰙾';
-  if (d.includes('snow')) return '󰖘';
-  if (d.includes('fog') || d.includes('mist') || d.includes('haze')) return '󰖑';
+  if (d.includes('clear') || d.includes('klar')) return '󰖙';
+  if (d.includes('cloud') || d.includes('wolken') || d.includes('bedeckt')) return '󰖐';
+  if (d.includes('rain') || d.includes('drizzle') || d.includes('regen') || d.includes('schauer'))
+    return '󰖗';
+  if (d.includes('thunder') || d.includes('gewitter')) return '󰙾';
+  if (d.includes('snow') || d.includes('schnee')) return '󰖘';
+  if (d.includes('fog') || d.includes('mist') || d.includes('haze') || d.includes('nebel') || d.includes('dunst'))
+    return '󰖑';
 
   return '󰋙';
 }
@@ -75,6 +77,7 @@ class ClockCard extends HTMLElement {
         url.searchParams.set('q', location);
         url.searchParams.set('units', units);
         url.searchParams.set('appid', apiKey);
+        url.searchParams.set('lang', 'de');
 
         const res = await fetch(url);
         if (!res.ok) throw new Error(`Weather error: ${res.status}`);
@@ -93,10 +96,10 @@ class ClockCard extends HTMLElement {
             ? `${Math.round(temp)}°${units === 'metric' ? 'C' : 'F'}`
             : '--°';
 
-        descEl.textContent = desc ? `${icon} ${desc}` : 'Weather unavailable';
-        updatedEl.textContent = `Updated ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+        descEl.textContent = desc ? `${icon} ${desc}` : 'Wetter nicht verfügbar';
+        updatedEl.textContent = `Aktualisiert ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
       } catch (error) {
-        descEl.textContent = 'Weather unavailable';
+        descEl.textContent = 'Wetter nicht verfügbar';
         updatedEl.textContent = '';
         console.error(error);
       }
