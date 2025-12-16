@@ -10,11 +10,6 @@ clock-card .clock-card {
     display: grid;
     grid-template-rows: auto auto auto;
     gap: var(--clock-gap);
-    background: radial-gradient(120% 120% at 20% -10%, rgba(126, 161, 255, 0.14), transparent 55%),
-        radial-gradient(120% 120% at 80% 0%, rgba(129, 230, 217, 0.16), transparent 50%),
-        var(--color-card);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: var(--shadow-sm), 0 18px 40px rgba(0, 0, 0, 0.35);
     container-type: inline-size;
     container-name: clock-card;
     padding: var(--clock-padding);
