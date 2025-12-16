@@ -126,6 +126,7 @@ clock-card .weather-desc {
 
 clock-card .weather-meta {
     display: flex;
+    align-items: flex-end;
     flex-direction: column;
     gap: var(--space-2xs);
     color: var(--color-text-muted);

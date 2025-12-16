@@ -1,10 +1,17 @@
 import template from './xkcd.template.html?raw';
 import './xkcd.css';
 
-type XkcdResponse = { img: string; alt: string; safe_title: string; num?: number };
-
 const TWENTY_MINUTES_MS = 20 * 60 * 1000;
 
+type XkcdResponse = {
+  img: string;
+  alt: string;
+  safe_title: string;
+  day: string;
+  month: string;
+  year: string;
+  num?: number;
+};
 class XkcdCard extends HTMLElement {
   private refreshIntervalId: number | undefined;
 
@@ -49,8 +56,13 @@ class XkcdCard extends HTMLElement {
 
       img.src = data.img;
       img.alt = data.alt;
-      caption.textContent = data.safe_title;
-      if (badge) badge.textContent = `#${randomId}`;
+      const formattedDate = [data.day, data.month, data.year].every(Boolean)
+        ? `${data.day.padStart(2, '0')}.${data.month.padStart(2, '0')}.${data.year}`
+        : '';
+
+      caption.textContent = formattedDate
+        ? `${data.safe_title} • ${formattedDate}`
+        : data.safe_title;
     } catch {
       caption.textContent = 'Could not load XKCD';
     }
