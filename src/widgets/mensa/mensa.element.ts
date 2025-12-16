@@ -96,6 +96,13 @@ function formatEuro(value: number): string {
   }).format(value);
 }
 
+function msUntilNextOneAm(now: Date): number {
+  const next = new Date(now);
+  next.setHours(1, 0, 0, 0);
+  if (next <= now) next.setDate(next.getDate() + 1);
+  return next.getTime() - now.getTime();
+}
+
 function createPriceBadges(dish: Dish): HTMLElement {
   const container = document.createElement('div');
   container.className = 'mensa-prices';
@@ -133,6 +140,7 @@ function createPriceBadges(dish: Dish): HTMLElement {
 
 class MensaCard extends HTMLElement {
   private scrollAnimation?: number;
+  private refreshTimeout?: number;
 
   private stopAutoScroll(): void {
     if (this.scrollAnimation) {
@@ -202,15 +210,32 @@ class MensaCard extends HTMLElement {
 
   disconnectedCallback(): void {
     this.stopAutoScroll();
+    if (this.refreshTimeout) {
+      clearTimeout(this.refreshTimeout);
+      this.refreshTimeout = undefined;
+    }
   }
 
-  async connectedCallback(): Promise<void> {
-    this.innerHTML = template;
+  private scheduleNextRefresh(
+    meta: HTMLElement,
+    list: HTMLUListElement,
+    error: HTMLElement,
+  ): void {
+    if (this.refreshTimeout) {
+      clearTimeout(this.refreshTimeout);
+    }
+    const delay = msUntilNextOneAm(new Date());
+    this.refreshTimeout = window.setTimeout(() => {
+      void this.loadMenu(meta, list, error);
+    }, delay);
+  }
 
-    const meta = this.querySelector('.mensa-meta') as HTMLElement | null;
-    const list = this.querySelector('.mensa-list') as HTMLUListElement | null;
-    const error = this.querySelector('.mensa-error') as HTMLElement | null;
-    if (!meta || !list || !error) return;
+  private async loadMenu(
+    meta: HTMLElement,
+    list: HTMLUListElement,
+    error: HTMLElement,
+  ): Promise<void> {
+    this.stopAutoScroll();
 
     const date = new Date();
     const dateParam = yyyymmdd(date);
@@ -218,6 +243,7 @@ class MensaCard extends HTMLElement {
     const url = `/api/mensa/get_dishes?date=${dateParam}&standort=4`;
 
     meta.textContent = `${date.toLocaleDateString('de-DE')} · Studierende`;
+    error.classList.add('hidden');
 
     try {
       const res = await fetch(url);
@@ -283,7 +309,20 @@ class MensaCard extends HTMLElement {
       error.classList.remove('hidden');
       meta.textContent = `Error · ${dateParam}`;
       console.warn('MensaCard failed:', e);
+    } finally {
+      this.scheduleNextRefresh(meta, list, error);
     }
+  }
+
+  async connectedCallback(): Promise<void> {
+    this.innerHTML = template;
+
+    const meta = this.querySelector('.mensa-meta') as HTMLElement | null;
+    const list = this.querySelector('.mensa-list') as HTMLUListElement | null;
+    const error = this.querySelector('.mensa-error') as HTMLElement | null;
+    if (!meta || !list || !error) return;
+
+    await this.loadMenu(meta, list, error);
   }
 }
 
