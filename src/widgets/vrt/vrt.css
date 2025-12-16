@@ -3,9 +3,6 @@ vrt-card {
 }
 
 vrt-card .vrt-card {
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
     height: fit-content;
 }
 
@@ -18,12 +15,6 @@ vrt-card .vrt-header {
 }
 
 vrt-card .vrt-meta {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-    padding: var(--space-2xs) var(--space-xs);
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: var(--radius-sm);
-    border: 1px solid rgba(255, 255, 255, 0.08);
     white-space: nowrap;
 }
 
@@ -49,11 +40,6 @@ vrt-card .vrt-list {
 }
 
 vrt-card .vrt-item {
-    padding: var(--space-sm);
-    border-radius: var(--radius-sm);
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 vrt-card .vrt-row {
@@ -94,10 +80,6 @@ vrt-card .vrt-delay.late {
     background: rgba(236, 72, 153, 0.12);
     border-color: rgba(236, 72, 153, 0.35);
     color: var(--color-text);
-}
-
-.hidden {
-    display: none;
 }
 
 vrt-card .vrt-inner {

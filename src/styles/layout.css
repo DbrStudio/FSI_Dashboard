@@ -42,6 +42,10 @@
     overflow: hidden;
 }
 
+.card .hidden {
+    display: none;
+}
+
 .card :is(.clock-heading, .xkcd-heading, .mensa-header > div, .vrt-header > div) {
     display: flex;
     flex-direction: column;
@@ -64,4 +68,21 @@
     color: var(--color-text);
     font-weight: 700;
     letter-spacing: 0.01em;
+}
+
+.card :is(.clock-date, .mensa-meta, .vrt-meta, .xkcd-badge) {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    padding: var(--space-2xs) var(--space-xs);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.card :is(.mensa-item, .vrt-item) {
+    padding: var(--space-sm);
+    border-radius: var(--radius-sm);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }

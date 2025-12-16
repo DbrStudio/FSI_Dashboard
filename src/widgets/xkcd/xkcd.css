@@ -1,7 +1,4 @@
 xkcd-card .xkcd-card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
     gap: var(--space-md);
 }
 
@@ -13,12 +10,6 @@ xkcd-card .xkcd-header {
 }
 
 xkcd-card .xkcd-badge {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-    padding: var(--space-2xs) var(--space-xs);
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: var(--radius-sm);
-    border: 1px solid rgba(255, 255, 255, 0.08);
     white-space: nowrap;
 }
 
