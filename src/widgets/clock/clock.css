@@ -24,14 +24,6 @@ clock-card .clock-top {
     flex-wrap: wrap;
 }
 
-clock-card h2 {
-    margin: 0;
-    font-size: var(--font-size-lg);
-    color: var(--color-text);
-    font-weight: 700;
-    letter-spacing: 0.01em;
-}
-
 clock-card .clock-date {
     color: var(--color-text-muted);
     font-size: clamp(var(--font-size-xs), 2vw, var(--font-size-sm));
@@ -148,18 +140,6 @@ clock-card .weather-meta {
 }
 
 clock-card .clock-heading {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-}
-
-clock-card .clock-eyebrow {
-    margin: 0;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: var(--font-size-xs);
-    font-weight: 600;
 }
 
 @container clock-card (max-width: 420px) {
