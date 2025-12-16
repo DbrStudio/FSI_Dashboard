@@ -13,6 +13,8 @@ clock-card .clock-card {
         var(--color-card);
     border: 1px solid rgba(255, 255, 255, 0.06);
     box-shadow: var(--shadow-sm), 0 18px 40px rgba(0, 0, 0, 0.35);
+    container-type: inline-size;
+    container-name: clock-card;
 }
 
 clock-card .clock-top {
@@ -49,21 +51,38 @@ clock-card .clock-time {
     gap: clamp(var(--space-3xs), 1vw, var(--space-xs));
     color: var(--color-text);
     text-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+    min-width: 0;
 }
 
 clock-card .clock-main {
-    font-size: clamp(2.25rem, 7vw, 5.75rem);
+    font-size: clamp(1.75rem, 18cqw, 6rem);
     font-weight: 800;
     letter-spacing: 0.04em;
     line-height: 0.95;
 }
 
 clock-card .clock-seconds {
-    font-size: clamp(1.25rem, 4vw, 2.75rem);
+    font-size: clamp(1rem, 11cqw, 3rem);
     font-weight: 700;
     color: var(--color-text-muted);
     line-height: 0.95;
     transform: translateY(6%);
+}
+
+@container clock-card (max-width: 360px) {
+    clock-card .clock-time {
+        gap: var(--space-4xs);
+        justify-content: flex-start;
+    }
+
+    clock-card .clock-main {
+        letter-spacing: 0.02em;
+    }
+
+    clock-card .clock-seconds {
+        transform: none;
+    }
 }
 
 clock-card .clock-sub {
