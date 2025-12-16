@@ -26,22 +26,14 @@ class XkcdCard extends HTMLElement {
     }
   }
 
-  private startAutoRefresh(
-    img: HTMLImageElement,
-    caption: HTMLElement,
-    badge: HTMLElement | null,
-  ): void {
+  private startAutoRefresh(img: HTMLImageElement, caption: HTMLElement): void {
     this.stopAutoRefresh();
     this.refreshIntervalId = window.setInterval(() => {
-      void this.loadComic(img, caption, badge);
+      void this.loadComic(img, caption);
     }, TWENTY_MINUTES_MS);
   }
 
-  private async loadComic(
-    img: HTMLImageElement,
-    caption: HTMLElement,
-    badge: HTMLElement | null,
-  ): Promise<void> {
+  private async loadComic(img: HTMLImageElement, caption: HTMLElement): Promise<void> {
     try {
       const latestRes = await fetch('/api/xkcd/latest');
       if (!latestRes.ok) throw new Error(`HTTP ${latestRes.status}`);
@@ -73,11 +65,10 @@ class XkcdCard extends HTMLElement {
 
     const img = this.querySelector('.comic-img') as HTMLImageElement | null;
     const caption = this.querySelector('.comic-caption') as HTMLElement | null;
-    const badge = this.querySelector('.xkcd-badge') as HTMLElement | null;
     if (!img || !caption) return;
 
-    await this.loadComic(img, caption, badge);
-    this.startAutoRefresh(img, caption, badge);
+    await this.loadComic(img, caption);
+    this.startAutoRefresh(img, caption);
   }
 }
 
