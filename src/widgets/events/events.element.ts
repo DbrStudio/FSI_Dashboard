@@ -32,6 +32,7 @@ class EventsCard extends HTMLElement {
     if (!list || !error) return;
 
     const endpoint = this.getAttribute('endpoint') ?? '/api/events';
+    console.log('EventsCard: Using endpoint:', endpoint);
 
     const render = (events: Event[]): void => {
       error.classList.add('hidden');
@@ -66,14 +67,18 @@ class EventsCard extends HTMLElement {
 
     const load = async (): Promise<void> => {
       try {
+        console.log('EventsCard: Fetching from endpoint:', endpoint);
         const res = await fetch(endpoint, { cache: 'no-store' });
+        console.log('EventsCard: Response status:', res.status);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = (await res.json()) as EventsResponse;
+        console.log('EventsCard: Received data:', data);
 
         if (!Array.isArray(data)) throw new Error('Bad payload');
 
         // Transform API data to internal format
         const events: Event[] = data.map((apiEvent) => {
+          console.log('EventsCard: Processing event:', apiEvent);
           const [date, time] = this.parseDatum(apiEvent.Datum);
           return {
             room: apiEvent.Ort,
@@ -83,8 +88,10 @@ class EventsCard extends HTMLElement {
           };
         });
 
+        console.log('EventsCard: Transformed events:', events);
         render(events);
       } catch (e) {
+        console.error('EventsCard: Error loading events:', e);
         error.classList.remove('hidden');
         console.warn('EventsCard failed:', e);
       }
@@ -103,11 +110,31 @@ class EventsCard extends HTMLElement {
   }
 
   private parseDatum(datum: string): [string, string] {
-    // Assume datum is in ISO format like "2024-05-20T09:00:00" or similar
-    const dateTime = new Date(datum);
-    const date = dateTime.toISOString().split('T')[0]; // Get YYYY-MM-DD part
-    const time = dateTime.toTimeString().split(' ')[0].substring(0, 5); // Get HH:MM part
-    return [date, time];
+    try {
+      // Try to parse as ISO string first
+      let dateTime = new Date(datum);
+
+      // If that doesn't work, try other common formats
+      if (isNaN(dateTime.getTime())) {
+        // Try format like "2024-05-20 09:00:00"
+        const spaceSeparated = datum.replace('T', ' ');
+        dateTime = new Date(spaceSeparated);
+
+        // If still not working, try to parse manually
+        if (isNaN(dateTime.getTime())) {
+          console.warn('EventsCard: Could not parse date:', datum);
+          // Return fallback values
+          return ['2024-01-01', '00:00'];
+        }
+      }
+
+      const date = dateTime.toISOString().split('T')[0]; // Get YYYY-MM-DD part
+      const time = dateTime.toTimeString().split(' ')[0].substring(0, 5); // Get HH:MM part
+      return [date, time];
+    } catch (error) {
+      console.error('EventsCard: Error parsing datum:', datum, error);
+      return ['2024-01-01', '00:00'];
+    }
   }
 }
 
