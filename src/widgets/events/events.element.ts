@@ -135,6 +135,20 @@ class EventsCard extends HTMLElement {
 
   private parseDatum(datum: string): [string, string] {
     try {
+      console.log('EventsCard: Parsing datum:', datum);
+
+      // Handle German format: "DD.MM.YYYY HH:MM"
+      const germanDateRegex = /^(\d{2})\.(\d{2})\.(\d{4})\s+(\d{2}):(\d{2})$/;
+      const match = datum.match(germanDateRegex);
+
+      if (match) {
+        const [, day, month, year, hour, minute] = match;
+        const dateString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        const timeString = `${hour}:${minute}`;
+        console.log('EventsCard: Parsed German date:', dateString, timeString);
+        return [dateString, timeString];
+      }
+
       // Try to parse as ISO string first
       let dateTime = new Date(datum);
 
