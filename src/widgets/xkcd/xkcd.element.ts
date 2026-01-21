@@ -57,7 +57,7 @@ class XkcdCard extends HTMLElement {
         : data.safe_title;
       //label.textContent = formattedDate;
     } catch {
-      caption.textContent = 'Could not load XKCD';
+      label.textContent = 'Could not load XKCD';
     }
   }
 
