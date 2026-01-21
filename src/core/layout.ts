@@ -10,34 +10,34 @@ export const layout: Record<string, WidgetLayout> = {
     col: 0,
     row: 0,
     colSpan: 3,
-    rowSpan: 3,
+    rowSpan: 5,
   },
 
   'events-card': {
     col: 6,
-    row: 6,
+    row: 9,
     colSpan: 4,
-    rowSpan: 4,
+    rowSpan: 7,
   },
 
   'mensa-card': {
     col: 3,
     row: 0,
     colSpan: 3,
-    rowSpan: 10,
+    rowSpan: 16,
   },
 
   'xkcd-card': {
     col: 0,
-    row: 3,
+    row: 5,
     colSpan: 3,
-    rowSpan: 7,
+    rowSpan: 11,
   },
 
   'vrt-card': {
     col: 6,
     row: 0,
     colSpan: 4,
-    rowSpan: 6,
+    rowSpan: 9,
   },
 };

@@ -1,7 +1,7 @@
 .dashboard {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-rows: repeat(16, 1fr);
     gap: var(--card-gap);
     padding: var(--space-lg);
 
