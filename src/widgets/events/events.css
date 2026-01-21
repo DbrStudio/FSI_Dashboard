@@ -1,22 +1,25 @@
-.events-card {
-    gap: var(--space-lg);
-    justify-content: space-between;
+events-card {
+    align-self: start;
 }
 
-.events-header {
+events-card .events-card {
+    height: fit-content;
+}
+
+events-card .events-header {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     gap: var(--space-md);
+    margin-bottom: var(--space-md);
 }
 
-.events-heading {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2xs);
+events-card .events-meta {
+    font-size: var(--font-size-xl);
+    white-space: nowrap;
 }
 
-.events-eyebrow {
+events-card .events-eyebrow {
     margin: 0;
     color: var(--color-text-muted);
     text-transform: uppercase;
@@ -25,54 +28,77 @@
     font-weight: 600;
 }
 
-.events-header h2 {
+events-card .events-title {
     margin: 0;
     font-size: var(--font-size-lg);
     color: var(--color-text);
 }
 
-.events-meta {
-    margin: 0;
+events-card .events-head {
+    display: grid;
+    grid-template-columns: 100px 1fr 250px;
+    gap: var(--space-sm);
     color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0 var(--space-sm) var(--space-xs) var(--space-sm);
+}
+
+events-card .events-head > div:nth-child(3) {
     text-align: right;
 }
 
-.events-placeholder {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    padding: var(--space-lg);
-    border-radius: var(--radius-md);
-    border: 1px dashed rgba(255, 255, 255, 0.12);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
-}
-
-.placeholder-icon {
-    display: grid;
-    place-items: center;
-    width: 64px;
-    height: 64px;
-    min-width: 64px;
-    min-height: 64px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    font-size: var(--font-size-xl);
-}
-
-.placeholder-copy {
+events-card .events-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2xs);
+    gap: 8px;
+}
+
+events-card .event-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 250px;
+    gap: var(--space-sm);
+    align-items: center;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.2s ease;
+}
+
+events-card .event-row:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(4px);
+}
+
+events-card .event-room {
+    font-weight: 600;
+    color: var(--color-text);
+    text-align: left;
+}
+
+events-card .event-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: var(--color-text);
 }
 
-.placeholder-copy .muted {
-    margin: 0;
-    color: var(--color-text-muted);
+events-card .event-datetime {
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    color: var(--color-text);
+    text-align: right;
 }
 
-.placeholder-copy p {
-    margin: 0;
+events-card .events-error {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    text-align: center;
+    padding: var(--space-sm);
+}
+
+events-card .events-error.hidden {
+    display: none;
 }
