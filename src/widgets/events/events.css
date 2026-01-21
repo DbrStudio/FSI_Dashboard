@@ -36,7 +36,7 @@ events-card .events-title {
 
 events-card .events-head {
     display: grid;
-    grid-template-columns: 100px 1fr 250px;
+    grid-template-columns: 150px 1fr 250px;
     gap: var(--space-sm);
     color: var(--color-text-muted);
     font-size: var(--font-size-xs);
@@ -57,7 +57,7 @@ events-card .events-list {
 
 events-card .event-row {
     display: grid;
-    grid-template-columns: 100px 1fr 250px;
+    grid-template-columns: 150px 1fr 250px;
     gap: var(--space-sm);
     align-items: center;
     background: rgba(255, 255, 255, 0.04);

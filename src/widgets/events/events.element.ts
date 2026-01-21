@@ -31,15 +31,28 @@ class EventsCard extends HTMLElement {
     const error = this.querySelector('.events-error') as HTMLElement | null;
     if (!list || !error) return;
 
-    const endpoint = this.getAttribute('endpoint') ?? '/api/events';
+    const endpoint = this.getAttribute('endpoint') ?? '/api/calender/events';
     console.log('EventsCard: Using endpoint:', endpoint);
 
     const render = (events: Event[]): void => {
+      console.log('EventsCard: Rendering events:', events);
       error.classList.add('hidden');
 
       list.innerHTML = '';
 
+      if (events.length === 0) {
+        console.log('EventsCard: No events to display');
+        const noEventsEl = document.createElement('div');
+        noEventsEl.textContent = 'No upcoming events';
+        noEventsEl.style.padding = '1rem';
+        noEventsEl.style.textAlign = 'center';
+        noEventsEl.style.color = 'var(--color-text-muted)';
+        list.appendChild(noEventsEl);
+        return;
+      }
+
       for (const event of events.slice(0, 5)) {
+        console.log('EventsCard: Rendering event:', event);
         const item = document.createElement('div');
         item.className = 'event-item';
 
@@ -63,32 +76,43 @@ class EventsCard extends HTMLElement {
         item.appendChild(row);
         list.appendChild(item);
       }
+      console.log('EventsCard: Finished rendering', events.length, 'events');
     };
 
     const load = async (): Promise<void> => {
       try {
         console.log('EventsCard: Fetching from endpoint:', endpoint);
         const res = await fetch(endpoint, { cache: 'no-store' });
-        console.log('EventsCard: Response status:', res.status);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = (await res.json()) as EventsResponse;
-        console.log('EventsCard: Received data:', data);
+        console.log('EventsCard: Response status:', res.status, 'headers:', Object.fromEntries(res.headers.entries()));
 
-        if (!Array.isArray(data)) throw new Error('Bad payload');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const rawText = await res.text();
+        console.log('EventsCard: Raw response text:', rawText);
+
+        const data = JSON.parse(rawText) as EventsResponse;
+        console.log('EventsCard: Parsed data:', data);
+
+        if (!Array.isArray(data)) {
+          console.error('EventsCard: Data is not an array:', data);
+          throw new Error('Bad payload');
+        }
 
         // Transform API data to internal format
-        const events: Event[] = data.map((apiEvent) => {
-          console.log('EventsCard: Processing event:', apiEvent);
+        const events: Event[] = data.map((apiEvent, index) => {
+          console.log(`EventsCard: Processing event ${index}:`, apiEvent);
           const [date, time] = this.parseDatum(apiEvent.Datum);
-          return {
-            room: apiEvent.Ort,
-            title: apiEvent.Name,
+          const event = {
+            room: apiEvent.Ort || 'No location',
+            title: apiEvent.Name || 'Untitled Event',
             date: date,
             time: time,
           };
+          console.log(`EventsCard: Transformed event ${index}:`, event);
+          return event;
         });
 
-        console.log('EventsCard: Transformed events:', events);
+        console.log('EventsCard: All transformed events:', events);
         render(events);
       } catch (e) {
         console.error('EventsCard: Error loading events:', e);
