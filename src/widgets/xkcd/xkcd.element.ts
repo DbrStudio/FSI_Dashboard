@@ -1,7 +1,7 @@
 import template from './xkcd.template.html?raw';
 import './xkcd.css';
 
-const TIME_IN_MS = 5 * 60 * 1000; // 5 minute (m * s * ms)
+const TIME_IN_MS = 60 * 60 * 1000; // (m * s * ms)
 
 type XkcdResponse = {
   img: string;
@@ -33,7 +33,7 @@ class XkcdCard extends HTMLElement {
     }, TIME_IN_MS);
   }
 
-  private async loadComic(img: HTMLImageElement, caption: HTMLElement): Promise<void> {
+  private async loadComic(img: HTMLImageElement, label: HTMLElement): Promise<void> {
     try {
       const latestRes = await fetch('/api/xkcd/latest');
       if (!latestRes.ok) throw new Error(`HTTP ${latestRes.status}`);
@@ -52,9 +52,10 @@ class XkcdCard extends HTMLElement {
         ? `${data.day.padStart(2, '0')}.${data.month.padStart(2, '0')}.${data.year}`
         : '';
 
-      caption.textContent = formattedDate
+      label.textContent = formattedDate
         ? `${data.safe_title} • ${formattedDate}`
         : data.safe_title;
+      //label.textContent = formattedDate;
     } catch {
       caption.textContent = 'Could not load XKCD';
     }
@@ -64,11 +65,12 @@ class XkcdCard extends HTMLElement {
     this.innerHTML = template;
 
     const img = this.querySelector('.comic-img') as HTMLImageElement | null;
-    const caption = this.querySelector('.comic-caption') as HTMLElement | null;
-    if (!img || !caption) return;
+//    const caption = this.querySelector('.comic-caption') as HTMLElement | null;
+    const label = this.querySelector('.xkcd-badge') as HTMLElement | null;
+    if (!img || !label) return;
 
-    await this.loadComic(img, caption);
-    this.startAutoRefresh(img, caption);
+    await this.loadComic(img, label);
+    this.startAutoRefresh(img, label);
   }
 }
 

@@ -19,71 +19,9 @@ type VrtDmResponse = {
 };
 
 class VrtDmCard extends HTMLElement {
-  private scrollAnimation?: number;
   private refreshTimer?: number;
 
-  private stopAutoScroll(): void {
-    if (this.scrollAnimation) {
-      cancelAnimationFrame(this.scrollAnimation);
-      this.scrollAnimation = undefined;
-    }
-  }
-
-  private startAutoScroll(list: HTMLUListElement): void {
-    this.stopAutoScroll();
-
-    requestAnimationFrame(() => {
-      if (!list.isConnected || !list.children.length) return;
-
-      let inner = list.querySelector<HTMLDivElement>('.vrt-inner');
-      if (!inner) {
-        inner = document.createElement('div');
-        inner.className = 'vrt-inner';
-
-        while (list.firstChild) inner.appendChild(list.firstChild);
-        list.appendChild(inner);
-      }
-
-      if (!inner.dataset.cloned) {
-        const clones = Array.from(inner.children, (c) => c.cloneNode(true));
-        inner.append(...clones);
-        inner.dataset.cloned = 'true';
-      }
-
-      const originalHeight = inner.scrollHeight / 2;
-      if (originalHeight <= list.clientHeight) return;
-
-      const speedPxPerSec = 32;
-
-      let pos = 0;
-      let lastTs: number | null = null;
-
-      const animate = (ts: number): void => {
-        if (!list.isConnected) {
-          this.stopAutoScroll();
-          return;
-        }
-
-        if (lastTs === null) lastTs = ts;
-        let dt = (ts - lastTs) / 1000;
-        lastTs = ts;
-        dt = Math.min(dt, 0.05);
-
-        pos += speedPxPerSec * dt;
-        pos %= originalHeight;
-
-        inner.style.transform = `translateY(${-pos}px)`;
-        this.scrollAnimation = requestAnimationFrame(animate);
-      };
-
-      pos = 0;
-      lastTs = null;
-      this.scrollAnimation = requestAnimationFrame(animate);
-    });
-  }
-
   disconnectedCallback(): void {
-    this.stopAutoScroll();
     if (this.refreshTimer) window.clearInterval(this.refreshTimer);
   }
 
@@ -145,8 +83,6 @@ class VrtDmCard extends HTMLElement {
         li.appendChild(row);
         list.appendChild(li);
       }
-
-      this.startAutoScroll(list);
     };
 
     const load = async (): Promise<void> => {
@@ -170,3 +106,4 @@ class VrtDmCard extends HTMLElement {
 }
 
 customElements.define('vrt-card', VrtDmCard);
+

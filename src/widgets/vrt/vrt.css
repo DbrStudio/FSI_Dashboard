@@ -33,13 +33,12 @@ vrt-card .vrt-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: block;
+    display: flex;
+    flex-direction: column;
     flex: 1;
     min-height: 0;
     overflow: hidden;
-}
-
-vrt-card .vrt-item {
+    gap: var(--space-sm)
 }
 
 vrt-card .vrt-row {

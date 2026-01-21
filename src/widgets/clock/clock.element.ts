@@ -6,13 +6,13 @@ function weatherIcon(desc?: string): string {
 
   const d = desc.toLowerCase();
 
-  if (d.includes('clear') || d.includes('klar')) return '󰖙';
+  if (d.includes('clear') || d.includes('klar')) return '☀️';
   if (d.includes('cloud') || d.includes('wolken') || d.includes('bedeckt') || d.includes('bewölkt'))
-    return '󰖐';
+    return '☁️';
   if (d.includes('rain') || d.includes('drizzle') || d.includes('regen') || d.includes('schauer'))
-    return '󰖗';
-  if (d.includes('thunder') || d.includes('gewitter')) return '󰙾';
-  if (d.includes('snow') || d.includes('schnee')) return '󰖘';
+    return '🌧️';
+  if (d.includes('thunder') || d.includes('gewitter')) return '⛈️';
+  if (d.includes('snow') || d.includes('schnee')) return '🌨️';
   if (
     d.includes('fog') ||
     d.includes('mist') ||
@@ -20,9 +20,9 @@ function weatherIcon(desc?: string): string {
     d.includes('nebel') ||
     d.includes('dunst')
   )
-    return '󰖑';
+    return '🌁';
 
-  return '󰋙';
+  return '🫥';
 }
 
 function two(n: number): string {

@@ -7,11 +7,11 @@
 html, body {
     margin: 0;
     height: 100%;
-    background: transparent;
+    background: #005196;
     color: var(--color-text);
     font-family: var(--font-family-base), serif;
 }
-
+/*
 body::before {
     content: "";
     position: fixed;
@@ -38,7 +38,7 @@ body::before {
     background-blend-mode: lighten;
     animation: dashboardGradient 18s ease-in-out infinite;
 }
-
+*/
 @keyframes dashboardGradient {
     0% {
         background-position: 0% 50%;
