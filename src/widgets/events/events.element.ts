@@ -24,12 +24,24 @@ class EventsCard extends HTMLElement {
     if (this.refreshTimer) window.clearInterval(this.refreshTimer);
   }
 
+  private getWeekNumber(date: Date): number {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  }
+
   async connectedCallback(): Promise<void> {
     this.innerHTML = template;
 
+    const meta = this.querySelector('.events-meta') as HTMLElement | null;
     const list = this.querySelector('.events-list') as HTMLElement | null;
     const error = this.querySelector('.events-error') as HTMLElement | null;
-    if (!list || !error) return;
+    if (!list || !error || !meta) return;
+
+    const currentWeek = this.getWeekNumber(new Date());
+    meta.textContent = `KW ${currentWeek}`;
 
     const endpoint = this.getAttribute('endpoint') ?? '/api/calender/events';
     console.log('EventsCard: Using endpoint:', endpoint);

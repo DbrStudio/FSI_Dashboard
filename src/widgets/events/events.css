@@ -15,8 +15,17 @@ events-card .events-header {
 }
 
 events-card .events-meta {
-    font-size: var(--font-size-xl);
     white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-2xs);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-text);
+    letter-spacing: 0.01em;
 }
 
 events-card .events-eyebrow {
