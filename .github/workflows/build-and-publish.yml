@@ -52,6 +52,8 @@ jobs:
           # Hier wieder die Plattformen für den Pi 3+
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           tags: ${{ steps.meta.outputs.tags }}
+          build-args: |
+            VITE_OPENWEATHERMAP_API_KEY=${{ secrets.VITE_OPENWEATHERMAP_API_KEY }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
