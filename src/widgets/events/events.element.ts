@@ -50,7 +50,7 @@ class EventsCard extends HTMLElement {
       console.log('EventsCard: Rendering events:', events);
       error.classList.add('hidden');
 
-      list.innerHTML = '';
+      list.innerHTML = ''; // Only reached after successful fetch + validation
 
       if (events.length === 0) {
         console.log('EventsCard: No events to display');
@@ -92,9 +92,12 @@ class EventsCard extends HTMLElement {
     };
 
     const load = async (): Promise<void> => {
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(() => controller.abort(), 10_000);
+
       try {
         console.log('EventsCard: Fetching from endpoint:', endpoint);
-        const res = await fetch(endpoint, { cache: 'no-store' });
+        const res = await fetch(endpoint, { cache: 'no-store', signal: controller.signal });
         console.log('EventsCard: Response status:', res.status, 'headers:', Object.fromEntries(res.headers.entries()));
 
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -124,12 +127,16 @@ class EventsCard extends HTMLElement {
           return event;
         });
 
+        // All data validated – safe to update the DOM
         console.log('EventsCard: All transformed events:', events);
         render(events);
       } catch (e) {
+        // Preserve existing list content so the dashboard doesn't go blank
         console.error('EventsCard: Error loading events:', e);
         error.classList.remove('hidden');
         console.warn('EventsCard failed:', e);
+      } finally {
+        window.clearTimeout(timeoutId);
       }
     };
 
