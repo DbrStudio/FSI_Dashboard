@@ -50,10 +50,9 @@ class EventsCard extends HTMLElement {
       console.log('EventsCard: Rendering events:', events);
       error.classList.add('hidden');
 
-      list.innerHTML = '';
-
       if (events.length === 0) {
         console.log('EventsCard: No events to display');
+        list.innerHTML = '';
         const noEventsEl = document.createElement('div');
         noEventsEl.textContent = 'No upcoming events';
         noEventsEl.style.padding = '1rem';
@@ -62,6 +61,8 @@ class EventsCard extends HTMLElement {
         list.appendChild(noEventsEl);
         return;
       }
+
+      list.innerHTML = '';
 
       for (const event of events.slice(0, 5)) {
         console.log('EventsCard: Rendering event:', event);
@@ -92,9 +93,11 @@ class EventsCard extends HTMLElement {
     };
 
     const load = async (): Promise<void> => {
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(() => controller.abort(), 10_000);
       try {
         console.log('EventsCard: Fetching from endpoint:', endpoint);
-        const res = await fetch(endpoint, { cache: 'no-store' });
+        const res = await fetch(endpoint, { cache: 'no-store', signal: controller.signal });
         console.log('EventsCard: Response status:', res.status, 'headers:', Object.fromEntries(res.headers.entries()));
 
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -130,6 +133,8 @@ class EventsCard extends HTMLElement {
         console.error('EventsCard: Error loading events:', e);
         error.classList.remove('hidden');
         console.warn('EventsCard failed:', e);
+      } finally {
+        window.clearTimeout(timeoutId);
       }
     };
 
