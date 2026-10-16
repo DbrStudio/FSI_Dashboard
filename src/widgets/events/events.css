@@ -81,7 +81,7 @@ events-card .event-row:hover {
     transform: translateX(4px);
 }
 
-events-card .event-room {
+events-card .event-location {
     font-weight: 600;
     color: var(--color-text);
     text-align: left;
