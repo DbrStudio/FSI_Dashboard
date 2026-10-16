@@ -2,7 +2,7 @@ import template from './events.template.html?raw';
 import './events.css';
 
 type Event = {
-  room: string;
+  location: string;
   title: string;
   date: string;
   time: string;
@@ -71,9 +71,9 @@ class EventsCard extends HTMLElement {
         const row = document.createElement('div');
         row.className = 'event-row';
 
-        const roomEl = document.createElement('div');
-        roomEl.className = 'event-room';
-        roomEl.textContent = event.room;
+        const locationEl = document.createElement('div');
+        locationEl.className = 'event-location';
+        locationEl.textContent = event.location;
 
         const titleEl = document.createElement('div');
         titleEl.className = 'event-title';
@@ -84,7 +84,7 @@ class EventsCard extends HTMLElement {
         dateTimeEl.className = 'event-datetime';
         dateTimeEl.textContent = `${this.formatDate(event.date)} \u00A0\u00A0\u00A0\u00A0   ${event.time}`;
 
-        row.append(roomEl, titleEl, dateTimeEl);
+        row.append(locationEl, titleEl, dateTimeEl);
         item.appendChild(row);
         list.appendChild(item);
       }
@@ -118,7 +118,7 @@ class EventsCard extends HTMLElement {
           console.log(`EventsCard: Processing event ${index}:`, apiEvent);
           const [date, time] = this.parseDatum(apiEvent.Datum);
           const event = {
-            room: apiEvent.Ort || 'No location',
+            location: apiEvent.Ort || 'No location',
             title: apiEvent.Name || 'Untitled Event',
             date: date,
             time: time,
